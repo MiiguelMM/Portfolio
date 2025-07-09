@@ -828,9 +828,407 @@ h1, h2, h3 {
         height: 150px;
     }
 }
-/* ===== ESTILOS ADICIONALES PARA SISTEMA DE IDIOMAS ===== */
+/* ===== MENÚ DESPLEGABLE DE IDIOMAS ===== */
 
-/* Indicador visual de idioma */
+/* Contenedor principal del dropdown */
+.language-dropdown {
+    position: fixed;
+    z-index: 10001;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px) scale(0.95);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+.language-dropdown.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    pointer-events: all;
+}
+
+/* Contenido del dropdown */
+.dropdown-content {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: var(--shadow-heavy);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 8px;
+    min-width: 160px;
+    max-width: 200px;
+}
+
+/* Tema claro */
+[data-theme="blue"] .dropdown-content {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(44, 82, 130, 0.2);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Opciones de idioma */
+.language-option {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    gap: 12px;
+    user-select: none;
+}
+
+.language-option:hover {
+    background: var(--hover-bg);
+    transform: translateX(4px);
+}
+
+.language-option.active {
+    background: var(--primary-color);
+    color: var(--dark-bg);
+    font-weight: 600;
+}
+
+/* Tema claro para opciones */
+[data-theme="blue"] .language-option:hover {
+    background: rgba(44, 82, 130, 0.1);
+}
+
+[data-theme="blue"] .language-option.active {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Bandera */
+.language-option .flag {
+    font-size: 1.2rem;
+    min-width: 20px;
+    text-align: center;
+}
+
+/* Nombre del idioma */
+.language-option .name {
+    flex: 1;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Checkmark para idioma activo */
+.language-option .checkmark {
+    font-size: 0.8rem;
+    color: var(--dark-bg);
+    font-weight: bold;
+}
+
+[data-theme="blue"] .language-option .checkmark {
+    color: white;
+}
+
+/* Estado activo del botón de idiomas */
+.languages.active {
+    background: var(--primary-color) !important;
+    color: white !important;
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="blue"] .languages.active {
+    box-shadow: 0 4px 15px rgba(44, 82, 130, 0.4);
+}
+
+/* Efecto de blur en el fondo cuando el dropdown está abierto */
+.language-dropdown-open .hero,
+.language-dropdown-open .section,
+.language-dropdown-open .footer {
+    filter: blur(2px);
+    transition: filter 0.3s ease;
+}
+
+/* Overlay sutil */
+.language-dropdown-open::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    z-index: 10000;
+    pointer-events: none;
+    opacity: 0;
+    animation: fadeInOverlay 0.3s ease forwards;
+}
+
+@keyframes fadeInOverlay {
+    to { opacity: 1; }
+}
+
+/* Notificación de cambio de idioma */
+.language-change-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--primary-color);
+    color: var(--dark-bg);
+    padding: 12px 20px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    z-index: 10002;
+    opacity: 0;
+    transform: translateY(-20px) scale(0.8);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-medium);
+    backdrop-filter: blur(10px);
+}
+
+.language-change-notification.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.language-change-notification.hide {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.8);
+}
+
+.language-change-notification .flag {
+    font-size: 1.1rem;
+}
+
+.language-change-notification .text {
+    font-size: 0.85rem;
+}
+
+/* Tema claro para notificación */
+[data-theme="blue"] .language-change-notification {
+    background: var(--primary-color);
+    color: white;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Bandera actual en el botón */
+.current-flag {
+    font-size: 1.1rem;
+    display: inline-block;
+    animation: flagPulse 1s ease;
+}
+
+@keyframes flagPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+/* Efecto de traducción suave para elementos */
+.translating {
+    opacity: 0.7;
+    transform: translateY(2px);
+    transition: all 0.15s ease;
+}
+
+/* Animaciones de entrada para el dropdown */
+@keyframes dropdownSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-15px) scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.language-dropdown.open .dropdown-content {
+    animation: dropdownSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Efectos hover mejorados */
+.language-option::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--primary-color);
+    border-radius: 0 2px 2px 0;
+    transform: scaleY(0);
+    transition: transform 0.2s ease;
+}
+
+.language-option:hover::before,
+.language-option.active::before {
+    transform: scaleY(1);
+}
+
+.language-option.active::before {
+    background: var(--dark-bg);
+}
+
+[data-theme="blue"] .language-option.active::before {
+    background: white;
+}
+
+/* Separador sutil entre opciones */
+.language-option:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 16px;
+    right: 16px;
+    height: 1px;
+    background: var(--border-color);
+    opacity: 0.3;
+}
+
+[data-theme="blue"] .language-option:not(:last-child)::after {
+    background: rgba(44, 82, 130, 0.15);
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .language-dropdown {
+        position: fixed;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) scale(0.95);
+    }
+    
+    .language-dropdown.open {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    
+    .dropdown-content {
+        min-width: 200px;
+        max-width: 280px;
+        padding: 12px;
+    }
+    
+    .language-option {
+        padding: 16px 20px;
+        font-size: 1rem;
+    }
+    
+    .language-option .flag {
+        font-size: 1.4rem;
+    }
+    
+    .language-change-notification {
+        top: 15px;
+        right: 15px;
+        padding: 10px 16px;
+        font-size: 0.8rem;
+    }
+    
+    /* Backdrop más prominente en móvil */
+    .language-dropdown-open::after {
+        background: rgba(0, 0, 0, 0.4);
+    }
+}
+
+/* Mejoras de accesibilidad */
+.language-option:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Animación de ripple para clicks */
+.language-option {
+    overflow: hidden;
+    position: relative;
+}
+
+.language-option::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease;
+    pointer-events: none;
+}
+
+.language-option:active::after {
+    width: 200px;
+    height: 200px;
+}
+
+/* Estados de carga y transición */
+.language-dropdown.loading .language-option {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.language-dropdown.loading .dropdown-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    animation: loadingBar 1s infinite;
+}
+
+@keyframes loadingBar {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Tooltip mejorado para el botón de idiomas */
+.languages {
+    position: relative;
+}
+
+.languages::before {
+    content: attr(title);
+    position: absolute;
+    bottom: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--card-bg);
+    color: var(--text-color);
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
+    z-index: 10003;
+}
+
+.languages:hover::before {
+    opacity: 1;
+    visibility: visible;
+    bottom: -30px;
+}
+
+[data-theme="blue"] .languages::before {
+    background: white;
+    border-color: rgba(44, 82, 130, 0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Evitar tooltip cuando dropdown está abierto */
+.languages.active::before {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+/* ===== INDICADOR SIMPLE DE IDIOMA ===== */
+
+/* Indicador visual de idioma (sistema cíclico) */
 .language-indicator {
     position: fixed;
     top: 20px;
@@ -857,72 +1255,11 @@ h1, h2, h3 {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Tooltip del botón de idiomas */
-.languages {
-    position: relative;
-    overflow: visible;
-}
-
-.languages::after {
-    content: 'ES→EN→DE';
-    position: absolute;
-    bottom: -25px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.6rem;
-    color: var(--text-muted);
-    white-space: nowrap;
-    opacity: 0;
-    transition: all 0.3s ease;
-    pointer-events: none;
-    background: var(--card-bg);
-    padding: 4px 8px;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-}
-
-.languages:hover::after {
-    opacity: 1;
-    bottom: -20px;
-}
-
-/* Tema claro para tooltip */
-[data-theme="blue"] .languages::after {
-    background: white;
-    color: var(--text-color);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Animación suave para cambios de contenido */
-.fade-translate {
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.3s ease;
-}
-
-.fade-translate.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Efecto de pulso para el botón de idiomas cuando se activa */
-.languages.active {
-    animation: languagePulse 0.6s ease;
-}
-
-@keyframes languagePulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.15); }
-    100% { transform: scale(1); }
-}
-
-/* Mejora visual para transiciones de texto */
+/* Efecto de traducción suave para elementos */
 .translating {
-    transition: opacity 0.2s ease;
-}
-
-.translating.fade-out {
     opacity: 0.7;
+    transform: translateY(2px);
+    transition: all 0.15s ease;
 }
 
 /* Responsive para el indicador de idioma */
@@ -933,114 +1270,441 @@ h1, h2, h3 {
         font-size: 0.7rem;
         padding: 6px 10px;
     }
-    
-    .languages::after {
-        font-size: 0.5rem;
-        bottom: -20px;
-    }
-    
-    .languages:hover::after {
-        bottom: -15px;
-    }
 }
 
-/* Animación de entrada para elementos traducidos */
-@keyframes translateIn {
-    from {
-        opacity: 0;
-        transform: translateY(5px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+/* ===== MENÚ HAMBURGUESA ===== */
 
-.translate-in {
-    animation: translateIn 0.3s ease forwards;
-}
-
-/* Mejora de accesibilidad para cambios de idioma */
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-}
-
-/* Notificación de cambio de idioma para lectores de pantalla */
-.language-change-notification {
-    position: absolute;
-    left: -10000px;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-}
-
-/* Efecto hover mejorado para el botón de idiomas */
-.languages:hover {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: white;
-    transform: scale(1.1) translateY(-1px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-}
-
-[data-theme="blue"] .languages:hover {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    box-shadow: 0 8px 25px rgba(44, 82, 130, 0.3);
-}
-
-/* Indicador de idioma activo en el botón */
-.languages .current-lang {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background: var(--accent-color);
-    color: var(--dark-bg);
-    font-size: 0.6rem;
-    padding: 2px 4px;
-    border-radius: 8px;
-    font-weight: bold;
-    min-width: 20px;
-    text-align: center;
+/* Contenedor principal del menú */
+.hamburger-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    visibility: hidden;
     opacity: 0;
-    transform: scale(0.8);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hamburger-menu.open {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Backdrop con blur */
+.hamburger-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.hamburger-menu.open .hamburger-backdrop {
+    opacity: 1;
+}
+
+/* Tema claro para backdrop */
+[data-theme="blue"] .hamburger-backdrop {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+/* Contenido del menú */
+.hamburger-content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    max-width: 400px;
+    height: 100%;
+    background: var(--card-bg);
+    border-left: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-heavy);
+}
+
+.hamburger-menu.open .hamburger-content {
+    transform: translateX(0);
+}
+
+/* Tema claro para contenido */
+[data-theme="blue"] .hamburger-content {
+    background: rgba(255, 255, 255, 0.98);
+    border-left-color: rgba(44, 82, 130, 0.2);
+}
+
+/* Header del menú */
+.hamburger-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem;
+    height: 18%;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--darker-bg);
+}
+
+[data-theme="blue"] .hamburger-header {
+    background: rgba(44, 82, 130, 0.05);
+    border-bottom-color: rgba(44, 82, 130, 0.15);
+}
+
+/* Logo en el menú (más grande) */
+.hamburger-logo {
+    display: flex;
+    align-items: center;
+}
+
+.hamburger-logo-img {
+    width: auto; /* Allow image to size naturally or by max-height */
+    max-width: 120px; /* Adjust max width as desired for your layout */
+    height: 70%; /* Keep percentage height relative to parent for responsiveness, or use a fixed px/vh */
+    object-fit: contain; /* Use 'contain' to ensure the entire logo is visible */
+    
+    transition: transform 0.3s ease, filter 0.5s ease; /* Added filter to transition */
+}
+
+.hamburger-logo-img:hover {
+    transform: scale(1.05);
+}
+
+[data-theme="blue"] .hamburger-logo-img {
+    filter: brightness(0.9) drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.2));
+}
+
+/* Botón de cerrar */
+.hamburger-close {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--border-color);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hamburger-close:hover {
+    background: var(--primary-color);
+    color: var(--dark-bg);
+    transform: scale(1.1);
+}
+
+[data-theme="blue"] .hamburger-close {
+    background: rgba(44, 82, 130, 0.1);
+    border-color: rgba(44, 82, 130, 0.2);
+}
+
+[data-theme="blue"] .hamburger-close:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Navegación */
+.hamburger-nav {
+    flex: 1;
+    padding: 2rem 0;
+    overflow-y: auto;
+}
+
+/* Items de navegación */
+.hamburger-nav-item {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 1.1rem;
+    font-weight: 500;
+    font-family: var(--font-heading);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    opacity: 0;
+    transform: translateX(50px);
+    border-bottom: 1px solid transparent;
+}
+
+.hamburger-nav-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.hamburger-nav-item:hover {
+    background: var(--hover-bg);
+    color: var(--primary-color);
+    border-bottom-color: var(--border-color);
+}
+
+.hamburger-nav-item.active {
+    background: var(--primary-color);
+    color: var(--dark-bg);
+    font-weight: 600;
+}
+
+/* Tema claro para items */
+[data-theme="blue"] .hamburger-nav-item:hover {
+    background: rgba(44, 82, 130, 0.08);
+}
+
+[data-theme="blue"] .hamburger-nav-item.active {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Icono del item */
+.hamburger-nav-item i:first-child {
+    width: 24px;
+    margin-right: 1rem;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+/* Flecha del item */
+.hamburger-arrow {
+    margin-left: auto;
+    font-size: 0.9rem;
+    opacity: 0.6;
     transition: all 0.3s ease;
 }
 
-.languages:hover .current-lang {
+.hamburger-nav-item:hover .hamburger-arrow {
     opacity: 1;
-    transform: scale(1);
+    transform: translateX(5px);
 }
 
-/* Animación de texto deslizante para cambios suaves */
-.slide-text-change {
-    position: relative;
+.hamburger-nav-item.active .hamburger-arrow {
+    opacity: 1;
+}
+
+/* Indicador lateral para item activo */
+.hamburger-nav-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--primary-color);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+    border-radius: 0 2px 2px 0;
+}
+
+.hamburger-nav-item.active::before {
+    transform: scaleY(1);
+}
+
+/* Footer del menú */
+.hamburger-footer {
+    padding: 2rem;
+    border-top: 1px solid var(--border-color);
+    background: var(--darker-bg);
+    text-align: center;
+}
+
+[data-theme="blue"] .hamburger-footer {
+    background: rgba(44, 82, 130, 0.05);
+    border-top-color: rgba(44, 82, 130, 0.15);
+}
+
+/* Redes sociales en el menú */
+.hamburger-social {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.hamburger-social a {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: var(--border-color);
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hamburger-social a:hover {
+    background: var(--primary-color);
+    color: var(--dark-bg);
+    transform: translateY(-3px);
+}
+
+[data-theme="blue"] .hamburger-social a {
+    background: rgba(44, 82, 130, 0.1);
+    border-color: rgba(44, 82, 130, 0.2);
+}
+
+[data-theme="blue"] .hamburger-social a:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Copyright en el menú */
+.hamburger-copyright {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Estado activo del botón hamburguesa */
+.navbar.active {
+    background: var(--primary-color) !important;
+    color: white !important;
+    transform: scale(1.05);
+}
+
+/* Animación del icono hamburguesa */
+.navbar.active i {
+    transform: rotate(90deg);
+}
+
+/* Bloquear scroll cuando el menú está abierto */
+.hamburger-menu-open {
     overflow: hidden;
 }
 
-.slide-text-change .text-content {
-    transition: transform 0.3s ease;
+/* Efectos de entrada escalonados */
+.hamburger-nav-item:nth-child(1) { transition-delay: 0.1s; }
+.hamburger-nav-item:nth-child(2) { transition-delay: 0.15s; }
+.hamburger-nav-item:nth-child(3) { transition-delay: 0.2s; }
+.hamburger-nav-item:nth-child(4) { transition-delay: 0.25s; }
+.hamburger-nav-item:nth-child(5) { transition-delay: 0.3s; }
+.hamburger-nav-item:nth-child(6) { transition-delay: 0.35s; }
+
+/* Responsive para dispositivos móviles */
+@media (max-width: 768px) {
+    .hamburger-content {
+        max-width: 100%;
+        width: 100%;
+    }
+    
+    .hamburger-header {
+        padding: 1.5rem;
+    }
+    
+    .hamburger-nav-item {
+        padding: 1.2rem 1.5rem;
+        font-size: 1rem;
+    }
+    
+    .hamburger-footer {
+        padding: 1.5rem;
+    }
+    
+    .hamburger-social {
+        gap: 1rem;
+    }
+    
+    .hamburger-social a {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
 }
 
-.slide-text-change.changing .text-content {
-    transform: translateY(-100%);
+/* Mejoras de accesibilidad */
+.hamburger-nav-item:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: -2px;
 }
 
-.slide-text-change .new-text {
+.hamburger-close:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Animaciones adicionales */
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Efecto de ripple para items */
+.hamburger-nav-item {
+    overflow: hidden;
+    position: relative;
+}
+
+.hamburger-nav-item::after {
+    content: '';
     position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    transform: translateY(0);
-    transition: transform 0.3s ease;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease;
+    pointer-events: none;
 }
 
-.slide-text-change.changing .new-text {
-    transform: translateY(-100%);
+.hamburger-nav-item:active::after {
+    width: 300px;
+    height: 300px;
+}
+
+/* Scrollbar personalizada para la navegación */
+.hamburger-nav::-webkit-scrollbar {
+    width: 4px;
+}
+
+.hamburger-nav::-webkit-scrollbar-track {
+    background: var(--border-color);
+}
+
+.hamburger-nav::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 2px;
+}
+
+.hamburger-nav::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
+
+/* Estados de hover mejorados */
+.hamburger-nav-item:hover i:first-child {
+    transform: scale(1.1);
+}
+
+.hamburger-social a:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="blue"] .hamburger-social a:hover {
+    box-shadow: 0 4px 15px rgba(44, 82, 130, 0.3);
 }

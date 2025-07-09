@@ -13,62 +13,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
-    <style>
-        /* Estilos adicionales para el indicador de idioma */
-        .language-indicator {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--primary-color);
-            color: var(--dark-bg);
-            padding: 8px 12px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 0.8rem;
-            z-index: 9999;
-            opacity: 0;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-            pointer-events: none;
-        }
-
-        /* Efecto hover mejorado para el botón de idiomas */
-        .languages {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .languages::after {
-            content: 'ES→EN→DE';
-            position: absolute;
-            bottom: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.6rem;
-            color: var(--text-muted);
-            white-space: nowrap;
-            opacity: 0;
-            transition: all 0.3s ease;
-        }
-
-        .languages:hover::after {
-            opacity: 1;
-            bottom: -20px;
-        }
-
-        /* Animación suave para cambios de idioma */
-        .fade-translate {
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.3s ease;
-        }
-
-        .fade-translate.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
 </head>
 
 <body>
@@ -92,7 +36,7 @@
         </div>
         <nav class="navItems">
             <div class="buttons">
-                <button type="button" class="languages" aria-label="Cambiar idioma" title="ES → EN → DE">
+                <button type="button" class="languages" aria-label="Cambiar idioma" title="Seleccionar idioma">
                     <i class="fas fa-globe"></i>
                 </button>
                 <button type="button" class="theme" aria-label="Cambiar tema de color" onclick="toggleTheme()">
@@ -108,7 +52,7 @@
     <main>
         <section id="home" class="hero">
             <div class="hero__content">
-                <h1 class="hero__title">Miguel</h1>
+                <h1 class="hero__title"></h1>
                 <div class="about__image">
                     <img src="./Assets/miguel.jpeg" alt="Foto de Miguel" class="about__photo">
                 </div>
