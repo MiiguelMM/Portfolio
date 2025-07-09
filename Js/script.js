@@ -614,14 +614,13 @@ function initializeLanguageSystem() {
     // Configurar el atributo lang del HTML
     document.documentElement.setAttribute('lang', currentLanguage);
     
-    // Agregar event listener al botón de idiomas
-    const languageBtn = document.querySelector('.languages');
-    if (languageBtn) {
-        languageBtn.addEventListener('click', changeLanguage);
-        
+    // Agregar event listener a TODOS los botones de idiomas (móvil y desktop)
+    const languageBtns = document.querySelectorAll('.languages');
+    languageBtns.forEach(btn => {
+        btn.addEventListener('click', changeLanguage);
         // Agregar tooltip con información de idiomas
-        languageBtn.setAttribute('title', 'ES → EN → DE');
-    }
+        btn.setAttribute('title', 'ES → EN → DE');
+    });
 }
 
 // === RESTO DEL SCRIPT ORIGINAL ===
@@ -727,6 +726,30 @@ document.addEventListener('DOMContentLoaded', function() {
     // Inicializar todos los sistemas
     initializeLanguageSystem();
     initializeHamburgerMenu(); // ¡Nuevo sistema de menú hamburguesa!
+    createParticles();
+    initCustomCursor();
+    handleScrollAnimations();
+    
+    // Ocultar loader
+    setTimeout(hideLoader, 1000);
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Cargar tema guardado
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'blue') {
+        document.body.setAttribute('data-theme', 'blue');
+    }
+    
+    // Sincronizar TODOS los botones de tema (móvil y desktop)
+    const themeBtns = document.querySelectorAll('.theme');
+    themeBtns.forEach(btn => {
+        btn.addEventListener('click', toggleTheme);
+    });
+    
+    // Inicializar todos los sistemas
+    initializeLanguageSystem();
+    initializeHamburgerMenu();
     createParticles();
     initCustomCursor();
     handleScrollAnimations();

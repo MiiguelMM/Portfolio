@@ -1708,3 +1708,866 @@ h1, h2, h3 {
 [data-theme="blue"] .hamburger-social a:hover {
     box-shadow: 0 4px 15px rgba(44, 82, 130, 0.3);
 }
+/* ===== ADAPTACIONES DESKTOP ===== */
+@media (min-width: 1024px) {
+    /* Header más elegante en desktop */
+    header {
+        height: 80px;
+        padding: 0 3rem;
+    }
+    
+    .logo {
+        width: auto;
+        justify-content: flex-start;
+    }
+    
+    .logo__Image {
+        max-width: 150px;
+        height: 60px;
+    }
+    
+    .navItems {
+        width: auto;
+        justify-content: flex-end;
+    }
+    
+    .buttons {
+        width: auto;
+        padding: 0 20px;
+        gap: 20px;
+    }
+    
+    /* Hero más impactante en desktop */
+    .hero {
+        min-height: 100vh;
+        padding: 0 4rem;
+    }
+    
+    .hero__content {
+        max-width: 1000px;
+    }
+    
+    .hero__title {
+        font-size: 4.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .about__image {
+        width: 220px;
+        height: 220px;
+        margin: 3rem auto;
+    }
+    
+    .hero__subtitle {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    .hero__description {
+        font-size: 1.3rem;
+        max-width: 700px;
+        margin: 0 auto 3rem;
+    }
+    
+    /* Secciones con más espacio en desktop */
+    .section {
+        padding: 7rem 4rem;
+        max-width: 1400px;
+    }
+    
+    .section__title {
+        font-size: 3.5rem;
+        margin-bottom: 5rem;
+    }
+    
+    /* About section mejorado */
+    .about__container {
+        max-width: 900px;
+    }
+    
+    .about__container p {
+        font-size: 1.2rem;
+        line-height: 2;
+        margin-bottom: 2rem;
+    }
+    
+    /* Skills grid más espacioso */
+    .skills__grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+    }
+    
+    .skill-card {
+        padding: 2.5rem 2rem;
+        font-size: 1.1rem;
+    }
+    
+    .skill-icon {
+        font-size: 3.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Projects grid desktop */
+    .projects__grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem;
+        max-width: 1200px;
+    }
+    
+    .project-card__img {
+        height: 300px;
+    }
+    
+    .project-card__content {
+        padding: 2.5rem;
+    }
+    
+    .project-card__title {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+    }
+    
+    .project-card__description {
+        font-size: 1.1rem;
+        line-height: 1.8;
+    }
+    
+    /* Experience grid más amplio */
+    .experience__grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2.5rem;
+        max-width: 1400px;
+    }
+    
+    .experience-badge {
+        padding: 2.5rem;
+    }
+    
+    .experience-badge img {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .experience-info h4 {
+        font-size: 1.3rem;
+    }
+    
+    .experience-info p {
+        font-size: 1rem;
+    }
+    
+    /* Formulario de contacto desktop */
+    .contact__description {
+        font-size: 1.2rem;
+        margin-bottom: 3rem;
+    }
+    
+    .contact__form {
+        max-width: 800px;
+        gap: 2rem;
+    }
+    
+    .contact__form input,
+    .contact__form textarea {
+        padding: 20px;
+        font-size: 1.1rem;
+    }
+    
+    /* Footer desktop */
+    .footer {
+        padding: 4rem 3rem;
+    }
+    
+    .footer__socials a {
+        font-size: 2rem;
+        margin: 0 1.5rem;
+    }
+    
+    /* Botones más grandes en desktop */
+    .btn {
+        padding: 16px 40px;
+        font-size: 1rem;
+    }
+    
+    /* Partículas más visibles en desktop */
+    .particle {
+        width: 3px;
+        height: 3px;
+    }
+    
+    /* Cursor visible solo en desktop */
+    .cursor, .cursor-follower {
+        display: block;
+    }
+}
+
+/* Pantallas muy grandes */
+@media (min-width: 1440px) {
+    .hero__title {
+        font-size: 5.5rem;
+    }
+    
+    .section {
+        padding: 8rem 6rem;
+        max-width: 1600px;
+    }
+    
+    .projects__grid {
+        gap: 4rem;
+    }
+    
+    .experience__grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+/* Hover effects exclusivos para desktop */
+@media (hover: hover) and (pointer: fine) {
+    /* Efectos hover más pronunciados */
+    .skill-card:hover {
+        transform: translateY(-12px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    .project-card:hover {
+        transform: translateY(-15px);
+    }
+    
+    .experience-badge:hover {
+        transform: translateY(-10px) scale(1.02);
+    }
+    
+    /* Animación suave en enlaces del header */
+    .languages, .theme, .navbar {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .languages::before, .theme::before, .navbar::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+    }
+    
+    .languages:hover::before, .theme:hover::before, .navbar:hover::before {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+/* Ajustes del menú hamburguesa para desktop */
+@media (min-width: 1024px) {
+    .hamburger-content {
+        max-width: 450px;
+    }
+    
+    .hamburger-nav-item {
+        padding: 1.8rem 2.5rem;
+        font-size: 1.2rem;
+    }
+    
+    .hamburger-social a {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+    }
+}
+
+/* Mejoras visuales para pantallas grandes */
+@media (min-width: 1920px) {
+    body {
+        font-size: 18px;
+    }
+    
+    .hero__title {
+        font-size: 6rem;
+    }
+    
+    .section__title {
+        font-size: 4rem;
+    }
+    
+    .about__image {
+        width: 280px;
+        height: 280px;
+    }
+    
+    .project-card__img {
+        height: 400px;
+    }
+}
+/* ===== HEADER DESKTOP REDESIGN ===== */
+@media (min-width: 1024px) {
+    /* Header principal */
+    header {
+        height: 90px;
+        padding: 0 5%;
+        background-color: rgba(15, 15, 15, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    /* Logo a la izquierda */
+    .logo {
+        width: auto;
+        justify-content: flex-start;
+    }
+    
+    .logo__Image {
+        max-width: 260px;
+        height: 65px;
+        cursor: pointer;
+    }
+    
+    /* Navegación principal en el centro */
+    .navItems {
+        width: auto;
+        position: static;
+    }
+    
+    /* Ocultar botón hamburguesa en desktop */
+    .navbar {
+        display: none !important;
+    }
+    
+    /* Reemplazar buttons con navegación horizontal */
+    .buttons {
+        display: none;
+    }
+    
+    /* Nueva navegación desktop */
+    .desktop-nav {
+        display: flex;
+        align-items: center;
+        gap: 3rem;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .desktop-nav-item {
+        color: var(--text-muted);
+        text-decoration: none;
+        font-family: var(--font-heading);
+        font-size: 1rem;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+        position: relative;
+        padding: 0.5rem 0;
+    }
+    
+    .desktop-nav-item::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--primary-color);
+        transition: width 0.3s ease;
+    }
+    
+    .desktop-nav-item:hover {
+        color: var(--primary-color);
+    }
+    
+    .desktop-nav-item:hover::after,
+    .desktop-nav-item.active::after {
+        width: 100%;
+    }
+    
+    .desktop-nav-item.active {
+        color: var(--primary-color);
+    }
+    
+    /* Botones de acción a la derecha */
+    .desktop-actions {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    
+    /* Botones de idioma y tema rediseñados */
+    .desktop-lang-btn,
+    .desktop-theme-btn {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: transparent;
+        border: 2px solid var(--border-color);
+        color: var(--text-muted);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+    }
+    
+    .desktop-lang-btn:hover,
+    .desktop-theme-btn:hover {
+        background: var(--primary-color);
+        border-color: var(--primary-color);
+        color: var(--dark-bg);
+        transform: scale(1.1);
+    }
+    
+    /* CTA button */
+    .desktop-cta {
+        padding: 12px 28px;
+        background: var(--primary-color);
+        color: var(--dark-bg);
+        text-decoration: none;
+        border-radius: 30px;
+        font-family: var(--font-heading);
+        font-weight: 600;
+        font-size: 0.95rem;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+        border: 2px solid var(--primary-color);
+    }
+    
+    .desktop-cta:hover {
+        background: transparent;
+        color: var(--primary-color);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(224, 224, 224, 0.2);
+    }
+    
+    /* Header sticky con cambio de estilo */
+    header.scrolled {
+        height: 75px;
+        background-color: rgba(15, 15, 15, 0.98);
+        box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
+    }
+    
+    header.scrolled .logo__Image {
+        height: 55px;
+    }
+    
+    header.scrolled .desktop-nav-item {
+        font-size: 0.95rem;
+    }
+    
+    header.scrolled .desktop-cta {
+        padding: 10px 24px;
+        font-size: 0.9rem;
+    }
+    
+    /* Tema azul ajustes */
+    [data-theme="blue"] header {
+        background-color: rgba(255, 255, 255, 0.95);
+    }
+    
+    [data-theme="blue"] .desktop-nav-item {
+        color: #7F8C8D;
+    }
+    
+    [data-theme="blue"] .desktop-nav-item:hover,
+    [data-theme="blue"] .desktop-nav-item.active {
+        color: var(--primary-color);
+    }
+    
+    [data-theme="blue"] .desktop-lang-btn,
+    [data-theme="blue"] .desktop-theme-btn {
+        border-color: rgba(44, 82, 130, 0.3);
+        color: var(--primary-color);
+    }
+    
+    [data-theme="blue"] .desktop-lang-btn:hover,
+    [data-theme="blue"] .desktop-theme-btn:hover {
+        background: var(--primary-color);
+        border-color: var(--primary-color);
+        color: white;
+    }
+    
+    [data-theme="blue"] .desktop-cta {
+        background: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+    }
+    
+    [data-theme="blue"] .desktop-cta:hover {
+        background: transparent;
+        color: var(--primary-color);
+        box-shadow: 0 5px 20px rgba(124, 124, 122, 0.2);
+    }
+    
+    [data-theme="blue"] header.scrolled {
+        background-color: rgba(255, 255, 255, 0.98);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* Pantallas muy grandes */
+@media (min-width: 1440px) {
+    header {
+        padding: 0 8%;
+    }
+    
+    .desktop-nav {
+        gap: 4rem;
+    }
+    
+    .desktop-nav-item {
+        font-size: 1.1rem;
+    }
+}
+/* ===== OCULTAR ELEMENTOS SEGÚN DISPOSITIVO ===== */
+
+/* Ocultar elementos desktop en móvil */
+.desktop-nav,
+.desktop-actions {
+    display: none;
+}
+
+/* ===== HEADER DESKTOP REDESIGN ===== */
+@media (min-width: 1024px) {
+    /* Mostrar elementos desktop */
+    .desktop-nav,
+    .desktop-actions {
+        display: flex;
+    }
+    
+    /* Ocultar navegación móvil en desktop */
+    .navItems {
+        display: none !important;
+    }
+    
+    /* Header principal */
+    header {
+        height: 90px;
+        padding: 0 5%;
+        background-color: rgba(15, 15, 15, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+    
+    /* Logo a la izquierda */
+    .logo {
+        width: auto;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin: 0;
+    }
+    
+    .logo__Image {
+        max-width: 260px;
+        height: 65px;
+        cursor: pointer;
+        margin: 0;
+    }
+    
+    /* Nueva navegación desktop centrada */
+    .desktop-nav {
+        display: flex;
+        align-items: center;
+        gap: 3rem;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .desktop-nav-item {
+        color: var(--text-muted);
+        text-decoration: none;
+        font-family: var(--font-heading);
+        font-size: 1rem;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+        position: relative;
+        padding: 0.5rem 0;
+    }
+    
+    .desktop-nav-item::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--primary-color);
+        transition: width 0.3s ease;
+    }
+    
+    .desktop-nav-item:hover {
+        color: var(--primary-color);
+    }
+    
+    .desktop-nav-item:hover::after,
+    .desktop-nav-item.active::after {
+        width: 100%;
+    }
+    
+    .desktop-nav-item.active {
+        color: var(--primary-color);
+    }
+    
+    /* Botones de acción a la derecha */
+    .desktop-actions {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    
+    /* Botones de idioma y tema rediseñados */
+    .desktop-lang-btn,
+    .desktop-theme-btn {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: transparent;
+        border: 2px solid var(--border-color);
+        color: var(--text-muted);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+    }
+    
+    .desktop-lang-btn:hover,
+    .desktop-theme-btn:hover {
+        background: var(--primary-color);
+        border-color: var(--primary-color);
+        color: var(--dark-bg);
+        transform: scale(1.1);
+    }
+    
+    /* CTA button */
+    .desktop-cta {
+        padding: 12px 28px;
+        background: var(--primary-color);
+        color: var(--dark-bg);
+        text-decoration: none;
+        border-radius: 30px;
+        font-family: var(--font-heading);
+        font-weight: 600;
+        font-size: 0.95rem;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+        border: 2px solid var(--primary-color);
+    }
+    
+    .desktop-cta:hover {
+        background: transparent;
+        color: var(--primary-color);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(224, 224, 224, 0.2);
+    }
+    
+    /* Tema azul ajustes */
+    [data-theme="blue"] header {
+        background-color: rgba(255, 255, 255, 0.95);
+    }
+    
+    [data-theme="blue"] .desktop-nav-item {
+        color: #7F8C8D;
+    }
+    
+    [data-theme="blue"] .desktop-nav-item:hover,
+    [data-theme="blue"] .desktop-nav-item.active {
+        color: var(--primary-color);
+    }
+    
+    [data-theme="blue"] .desktop-lang-btn,
+    [data-theme="blue"] .desktop-theme-btn {
+        border-color: rgba(44, 82, 130, 0.3);
+        color: var(--primary-color);
+    }
+    
+    [data-theme="blue"] .desktop-lang-btn:hover,
+    [data-theme="blue"] .desktop-theme-btn:hover {
+        background: var(--primary-color);
+        border-color: var(--primary-color);
+        color: white;
+    }
+    
+    [data-theme="blue"] .desktop-cta {
+        background: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+    }
+    
+    [data-theme="blue"] .desktop-cta:hover {
+        background: transparent;
+        color: var(--primary-color);
+        box-shadow: 0 5px 20px rgba(124, 124, 122, 0.2);
+    }
+}
+/* ===== HEADER MÁS GRANDE PARA DESKTOP ===== */
+@media (min-width: 1024px) {
+    /* Header más alto */
+    header {
+        height: 110px; /* Aumentado de 90px */
+    }
+    
+    /* Body padding ajustado al nuevo header */
+    body {
+        padding-top: 100px;
+    }
+    
+    /* Logo aún más grande */
+    .logo__Image {
+        max-width: 440px;  
+        height: 210px;      
+    }
+    
+    /* Items de navegación más grandes */
+    .desktop-nav-item {
+        font-size: 1.2rem;  /* Aumentado de 1rem */
+        font-weight: 600;   /* Más bold */
+        letter-spacing: 0.8px;
+        padding: 0.8rem 0;
+    }
+    
+    /* Botones de acción más grandes */
+    .desktop-lang-btn,
+    .desktop-theme-btn {
+        width: 55px;      /* Aumentado de 45px */
+        height: 55px;     /* Aumentado de 45px */
+        font-size: 1.3rem; /* Aumentado de 1.1rem */
+    }
+    
+    /* CTA más grande */
+    .desktop-cta {
+        padding: 16px 36px;  /* Aumentado de 12px 28px */
+        font-size: 1.1rem;   /* Aumentado de 0.95rem */
+        font-weight: 700;
+    }
+    
+    /* Ajustes para header scrolled */
+    header.scrolled {
+        height: 90px;  /* Aumentado de 75px */
+    }
+    
+    header.scrolled .logo__Image {
+        height: 70px;  /* Aumentado de 55px */
+    }
+    
+    header.scrolled .desktop-nav-item {
+        font-size: 1.1rem;  /* Aumentado de 0.95rem */
+    }
+    
+    header.scrolled .desktop-cta {
+        padding: 14px 30px;  /* Aumentado */
+        font-size: 1rem;     /* Aumentado de 0.9rem */
+    }
+}
+
+/* Para pantallas muy grandes */
+@media (min-width: 1440px) {
+    header {
+        height: 120px;
+    }
+    
+    body {
+        padding-top: 100px;
+    }
+    
+    .logo__Image {
+        width: 300px;
+        height: 240px;
+    }
+    
+    .desktop-nav-item {
+        font-size: 1.3rem;
+    }
+    
+    .desktop-lang-btn,
+    .desktop-theme-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 1.4rem;
+    }
+    
+    .desktop-cta {
+        padding: 18px 40px;
+        font-size: 1.2rem;
+    }
+}
+/* ===== FIX PARA PANTALLAS 1024px - 1174px ===== */
+@media (min-width: 1024px) and (max-width: 1174px) {
+    /* Header más compacto */
+    header {
+        height: 85px;
+        padding: 0 3%;
+    }
+    
+    body {
+        padding-top: 85px;
+    }
+    
+    /* Logo más pequeño */
+    .logo__Image {
+        max-width: 180px;
+        height: 165px;
+    }
+    
+    /* Navegación con menos espaciado */
+    .desktop-nav {
+        gap: 1.8rem;  /* Reducido de 3rem */
+    }
+    
+    .desktop-nav-item {
+        font-size: 0.95rem;  /* Reducido */
+        padding: 0.4rem 0;
+    }
+    
+    /* Botones más pequeños */
+    .desktop-lang-btn,
+    .desktop-theme-btn {
+        width: 42px;
+        height: 42px;
+        font-size: 1rem;
+    }
+    
+    /* Reducir gap en acciones */
+    .desktop-actions {
+        gap: 0.8rem;
+    }
+    
+    /* CTA más compacto si lo vuelves a activar */
+    .desktop-cta {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+    
+    /* Header scrolled ajustado */
+    header.scrolled {
+        height: 75px;
+    }
+    
+    header.scrolled .logo__Image {
+        height: 55px;
+        max-width: 160px;
+    }
+    
+    header.scrolled .desktop-nav-item {
+        font-size: 0.9rem;
+    }
+}
