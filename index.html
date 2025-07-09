@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio de Miguel | Full Stack Developer</title>
+    <link rel="stylesheet" href="./Css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Estilos adicionales para el indicador de idioma */
+        .language-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: var(--dark-bg);
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            z-index: 9999;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        /* Efecto hover mejorado para el botón de idiomas */
+        .languages {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .languages::after {
+            content: 'ES→EN→DE';
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .languages:hover::after {
+            opacity: 1;
+            bottom: -20px;
+        }
+
+        /* Animación suave para cambios de idioma */
+        .fade-translate {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .fade-translate.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="loader-inner"></div>
+    </div>
+
+    <!-- Partículas flotantes -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Cursor personalizado -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <header id="header">
+        <div class="logo">
+            <a href="#home" aria-label="Volver al inicio">
+                <img src="./Assets/logo10.png" alt="Logo personal" class="logo__Image">
+            </a>
+        </div>
+        <nav class="navItems">
+            <div class="buttons">
+                <button type="button" class="languages" aria-label="Cambiar idioma" title="ES → EN → DE">
+                    <i class="fas fa-globe"></i>
+                </button>
+                <button type="button" class="theme" aria-label="Cambiar tema de color" onclick="toggleTheme()">
+                    <i class="fas fa-palette"></i>
+                </button>
+                <button type="button" class="navbar" aria-label="Abrir menú de navegación">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero__content">
+                <h1 class="hero__title">Miguel</h1>
+                <div class="about__image">
+                    <img src="./Assets/miguel.jpeg" alt="Foto de Miguel" class="about__photo">
+                </div>
+                
+                <p class="hero__subtitle">Full Stack Developer<br>Java & React</p>
+                <p class="hero__description">Con 3 años de experiencia industrial en Eli Lilly, Hexcel y más. Ahora especializado en desarrollo Full Stack, creando soluciones digitales que aportan valor real a las empresas.</p>
+                <a href="#contact" class="btn btn-primary">Contáctame</a>
+            </div>
+        </section>
+
+        <section id="about" class="section fade-in">
+            <h2 class="section__title">Sobre Mí</h2>
+            <div class="about__container">
+                <div class="about__text">
+                    <p>Profesional con experiencia en procesos de manufactura de precisión, cumpliendo estándares como GMP y normativas aeroespaciales. Tras años en entornos corporativos, ahora enfocado en desarrollo Full Stack para crear soluciones reales y escalables.</p>
+                    <p>Siempre aprendiendo, siempre construyendo. ¡Conectemos!</p>
+                    <a href="https://www.linkedin.com/in/tu-usuario" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+                        <i class="fab fa-linkedin"></i> Ver perfil en LinkedIn
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="section fade-in">
+            <h2 class="section__title">Competencias Técnicas</h2>
+            <div class="skills__grid">
+                <div class="skill-card"><i class="fab fa-java skill-icon"></i>Java (Spring Boot)</div>
+                <div class="skill-card"><i class="fab fa-js-square skill-icon"></i>JavaScript (React)</div>
+                <div class="skill-card"><i class="fas fa-cloud skill-icon"></i>AWS Foundations</div>
+                <div class="skill-card"><i class="fas fa-database skill-icon"></i>PostgreSQL / MySQL</div>
+                <div class="skill-card"><i class="fas fa-server skill-icon"></i>Deployment (Render)</div>
+                <div class="skill-card"><i class="fab fa-git-alt skill-icon"></i>Git</div>
+                <div class="skill-card"><i class="fab fa-linux skill-icon"></i>Linux & CLI</div>
+                <div class="skill-card"><i class="fas fa-cogs skill-icon"></i>Integración Continua</div>
+                <div class="skill-card"><i class="fab fa-docker skill-icon"></i>Docker</div>
+            </div>
+        </section>
+
+        <section id="projects" class="section fade-in">
+            <h2 class="section__title">Proyectos</h2>
+            <div class="projects__grid">
+                <div class="project-card">
+                    <img src="./Assets/crm.png" alt="CRM Web App" class="project-card__img">
+                    <div class="project-card__content">
+                        <h3 class="project-card__title">CRM Web App</h3>
+                        <p class="project-card__description">Proyecto Full Stack para gestionar relaciones con clientes. Incluye login, panel de control y base de datos.</p>
+                        <div class="project-card__links">
+                            <a href="#" class="btn btn-tertiary" target="_blank">Ver Demo</a>
+                            <a href="#" class="btn btn-secondary" target="_blank">Código</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="./Assets/proximamente.png" alt="Spyzer" class="project-card__img">
+                    <div class="project-card__content">
+                        <h3 class="project-card__title">Spyzer</h3>
+                        <p class="project-card__description">En desarrollo: plataforma fintech para seguimiento en tiempo real del SP500.</p>
+                        <div class="project-card__links">
+                            <a href="#" class="btn btn-tertiary" target="_blank">Ver Demo</a>
+                            <a href="#" class="btn btn-secondary" target="_blank">Código</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="section fade-in">
+            <h2 class="section__title">Experiencia previa</h2>
+            <div class="experience__grid">
+                <a href="https://www.hpecds.com/" target="_blank" class="experience-badge">
+                    <img src="./Assets/hpe.jpg" alt="HP" />
+                    <div class="experience-info">
+                        <h4>HP SCDS</h4>
+                        <p>Desarrollador de software (abr. 2025 - may. 2025)</p>
+                    </div>
+                </a>
+                <a href="https://www.hexcel.com/" target="_blank" class="experience-badge">
+                    <img src="./Assets/hexcel.jpg" alt="Hexcel" />
+                    <div class="experience-info">
+                        <h4>Hexcel Corporation</h4>
+                        <p>Operador de producción (ene. 2024 - ago. 2024)</p>
+                    </div>
+                </a>
+                <a href="https://www.lilly.com/" target="_blank" class="experience-badge">
+                    <img src="./Assets/lilly.png" alt="Eli Lilly" />
+                    <div class="experience-info">
+                        <h4>Eli Lilly and Company</h4>
+                        <p>Operador de producción (feb. 2022 - jul. 2023)</p>
+                    </div>
+                </a>
+                <a href="https://www.ketersa.com/" target="_blank" class="experience-badge">
+                    <img src="./Assets/ketersa.png" alt="KETERSA" />
+                    <div class="experience-info">
+                        <h4>KETERSA</h4>
+                        <p>Programador y diseñador CNC (jun. 2021 - feb. 2022)</p>
+                    </div>
+                </a>
+                <a href="#" target="_blank" class="experience-badge">
+                    <img src="./Assets/fuyma.jpg" alt="FUYMA" />
+                    <div class="experience-info">
+                        <h4>FUYMA</h4>
+                        <p>Operador de producción (abr. 2021 - jun. 2021)</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section id="contact" class="section fade-in">
+            <h2 class="section__title">Contacto</h2>
+            <p class="contact__description">¿Interesado en colaborar? Escríbeme o contáctame a través de mis redes.</p>
+            <form action="#" method="POST" class="contact__form">
+                <input type="text" name="name" placeholder="Tu Nombre" required>
+                <input type="email" name="email" placeholder="Tu Email" required>
+                <textarea name="message" rows="5" placeholder="Tu Mensaje" required></textarea>
+                <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+            </form>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer__socials">
+            <a href="https://www.linkedin.com/in/tu-usuario" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://github.com/MiiguelMM" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="mailto:tu.email@example.com" aria-label="Email">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </div>
+        <p class="footer__copy">&copy; 2025 Miguel. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="./Js/script.js"></script>
+</body>
+
+</html>

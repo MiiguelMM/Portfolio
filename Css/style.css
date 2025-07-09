@@ -1,0 +1,1046 @@
+/* --- Global Resets y Fuentes --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* --- TEMA OSCURO PROFESIONAL (por defecto) --- */
+:root {
+    /* -- Colores Ajustados para combinar con Oro Blanco (usando nombres existentes) -- */
+    --primary-color: #E0E0E0; /* Oro Blanco base: Un gris muy claro, casi blanco */
+    --secondary-color: #BDBDBD; /* Oro Blanco sombra/profundidad: Un gris medio-claro con un toque más metálico */
+    --accent-gradient: linear-gradient(135deg, #F5F5F5, #D4D4D4); /* Gradiente principal que simula un oro blanco brillante */
+
+    /* -- Colores Oscuros (mantienen los originales) -- */
+    --dark-bg: #0F0F0F;          /* Negro carbón */
+    --darker-bg: #080808;         /* Negro profundo */
+    --card-bg: #1C1C1C;           /* Gris oscuro */
+    --glass-bg: rgba(28, 28, 28, 0.7); /* Glassmorphism sutil */
+
+    /* -- Colores de Texto (mantienen los originales) -- */
+    --text-color: #E8E8E8;        /* Blanco suave */
+    --text-muted: #A0A0A0;        /* Gris claro */
+
+    /* -- Color de Acento (Oro Blanco brillante para acentos) -- */
+    --accent-color: #FFFFFF; /* Blanco puro, excelente para el brillo del oro blanco */
+
+    /* -- Otros (mantienen los originales) -- */
+    --border-color: #2D2D2D;      /* Borde */
+    --hover-bg: #252525;          /* Fondo al pasar el ratón */
+
+    /* -- Fuentes (mantienen los originales) -- */
+    --font-heading: 'Playfair Display', serif; /* Más elegante y con contraste para títulos */
+    --font-body: 'Lora', serif;
+
+    /* -- Sombras (mantienen los originales) -- */
+    --shadow-light: 0 2px 10px rgba(0, 0, 0, 0.3);
+    --shadow-medium: 0 5px 20px rgba(0, 0, 0, 0.4);
+    --shadow-heavy: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* --- TEMA AZUL CLARO PROFESIONAL (Versión Refinada para el Logo) --- */
+[data-theme="blue"] {
+    --primary-color: #7c7c7a;                 /* Mantenemos tu azul medio profesional, es clave y combina bien con el logo */
+    --secondary-color: #a2a3a0;               /* Mantenemos tu azul oscuro para sombras/profundidad */
+    --accent-gradient: linear-gradient(135deg, #4A76A8, #3C6382); /* Mantenemos el gradiente original, muy apropiado */
+    
+    /* NUEVOS AZULES CLAROS Y ARMÓNICOS */
+    --dark-bg: #EBF3F8;                       /* Fondo muy claro, un azul pálido sereno y aireado, derivado del primario */
+    --darker-bg: #D9E6F0;                     /* Un azul claro pero con más cuerpo, para secciones con más presencia */
+    --card-bg: #FFFFFF;                       /* Fondo de tarjetas blanco puro para limpieza y resalte de contenido */
+    --glass-bg: rgba(255, 255, 255, 0.85);    /* Glassmorphism en blanco para mantener la luminosidad */
+    
+    --text-color: #2C3E50;                    /* Texto azul oscuro para un contraste excelente y profesional */
+    --text-muted: #7F8C8D;                    /* Gris azulado medio para texto secundario */
+    
+    --accent-color: #6C7A89;                  /* Mantenemos tu gris azulado para acentos sutiles */
+    
+    --border-color: #B8CDE0;                  /* Borde azul claro pero con suficiente presencia, armoniza con los fondos */
+    --hover-bg: #F5F9FC;                      /* Fondo al pasar el ratón, un azul casi blanco, muy suave y sutil */
+    
+    --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.07); /* Sombras ligeramente más suaves para un look ligero */
+    --shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Sombra menos pronunciada, más delicada */
+    --shadow-heavy: 0 8px 16px rgba(0, 0, 0, 0.15); /* Sombra pesada, también suavizada */
+}
+/* --- BODY Y ANIMACIONES DE FONDO --- */
+body {
+    width: 100vw;
+    min-height: 100vh;
+    font-family: var(--font-body);
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--dark-bg);
+    transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-x: hidden;
+    position: relative;
+    padding-top: 92px;
+}
+
+/* Patrón de fondo sutil para tema oscuro */
+body:not([data-theme="blue"])::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(184, 134, 11, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(139, 105, 20, 0.03) 0%, transparent 50%);
+    z-index: -1;
+}
+
+/* Fondo limpio para tema claro */
+[data-theme="blue"] body {
+    background-color: var(--dark-bg);
+}
+
+/* Partículas flotantes sutiles */
+.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.7;
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    opacity: 0;
+    /* Ajustado para que las partículas empiecen a animarse desde el principio */
+    animation: floatSubtle 20s linear infinite forwards; /* 'forwards' para mantener el último estado */
+}
+
+/* Partículas más visibles en tema claro */
+[data-theme="blue"] .particle {
+    background: var(--primary-color);
+    opacity: 0;
+}
+
+@keyframes floatSubtle {
+    0% {
+        opacity: 0;
+        transform: translateY(100vh) scale(0);
+    }
+    10% {
+        opacity: 0.5;
+        transform: translateY(90vh) scale(1);
+    }
+    90% {
+        opacity: 0.5;
+        transform: translateY(10vh) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(0) scale(0);
+    }
+}
+
+/* --- HEADER --- */
+header {
+    height: 95px;
+    width: 100%;
+    background-color: rgba(15, 15, 15, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Header para tema azul */
+[data-theme="blue"] header {
+    background-color: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    height: 100%;
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+/* MODIFICACIONES PARA EL LOGO */
+.logo__Image {
+    width: auto; /* Allow image to size naturally or by max-height */
+    max-width: 120px; /* Adjust max width as desired for your layout */
+    height: 70%; /* Keep percentage height relative to parent for responsiveness, or use a fixed px/vh */
+    object-fit: contain; /* Use 'contain' to ensure the entire logo is visible */
+    margin-right: 10px;
+    transition: transform 0.3s ease, filter 0.5s ease; /* Added filter to transition */
+    
+    /* Default theme (Oro Blanco) - Add a subtle shadow for depth */
+    filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.5)); /* Darker shadow for dark background */
+}
+
+.logo__Image:hover {
+    transform: scale(1.05);
+}
+
+/* Ajuste de brillo y sombra del logo según el tema azul (claro) */
+[data-theme="blue"] .logo__Image {
+    filter: brightness(0.9) drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.2)); /* Lighter shadow for light background */
+}
+
+.navItems {
+    height: 100%;
+    width: 52%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.buttons {
+    height: 55%;
+    width: 40%;
+    border-radius: 50px;
+    background-color: rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: row;
+    gap: 17px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(5px);
+}
+
+/* Buttons container en tema azul */
+[data-theme="blue"] .buttons {
+    background-color: rgba(44, 82, 130, 0.08);
+    border: 1px solid rgba(44, 82, 130, 0.2);
+}
+
+.languages,
+.theme,
+.navbar {
+    height: 86%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: var(--border-color);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1em;
+    color: var(--primary-color);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    flex-shrink: 0;
+}
+
+/* Botones en tema azul */
+[data-theme="blue"] .languages,
+[data-theme="blue"] .theme,
+[data-theme="blue"] .navbar {
+    background-color: rgba(44, 82, 130, 0.1);
+    border: 1px solid rgba(44, 82, 130, 0.3);
+    color: var(--primary-color);
+}
+
+.languages:hover,
+.theme:hover,
+.navbar:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(184, 134, 11, 0.4);
+}
+
+[data-theme="blue"] .languages:hover,
+[data-theme="blue"] .theme:hover,
+[data-theme="blue"] .navbar:hover {
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 0 15px rgba(44, 82, 130, 0.4);
+}
+
+/* --- TÍTULOS PROFESIONALES --- */
+h1, h2, h3 {
+    font-family: var(--font-heading);
+    color: var(--primary-color);
+    font-weight: 700;
+    position: relative;
+}
+
+.section {
+    padding: 5rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section__title {
+    text-align: center;
+    font-size: 2.8rem;
+    margin-bottom: 3.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+}
+
+.section__title::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    width: 80px;
+    height: 3px;
+    background: var(--primary-color);
+    transform: translateX(-50%);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+.section__title:hover::after {
+    width: 120px;
+}
+
+/* --- HERO SECTION ELEGANTE --- */
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 2rem;
+   
+}
+
+.hero__content {
+    max-width: 800px;
+    animation: heroEntry 1.2s ease-out;
+    z-index: 2;
+    
+    transform: none !important;
+}
+
+@keyframes heroEntry {
+    0% { 
+        opacity: 0; 
+        transform: translateY(30px); 
+    }
+    100% { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+.hero__title {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 900;
+    background: var(--primary-color);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.about__image {
+    width: 180px;
+    height: 180px;
+    margin: 2rem auto;
+    position: relative;
+}
+
+.about__photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid var(--primary-color);
+    box-shadow: var(--shadow-medium);
+    transition: all 0.4s ease;
+}
+
+.about__photo:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-heavy);
+}
+
+.hero__subtitle {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    font-family: var(--font-heading);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    opacity: 0;
+    animation: fadeInUp 1s ease-out 0.3s forwards;
+}
+
+.hero__description {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    color: var(--text-muted);
+    opacity: 0;
+    animation: fadeInUp 1s ease-out 0.6s forwards;
+}
+
+@keyframes fadeInUp {
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+    from { 
+        opacity: 0; 
+        transform: translateY(20px); 
+    }
+}
+
+/* --- BOTONES ELEGANTES --- */
+.btn {
+    display: inline-block;
+    padding: 14px 32px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-family: var(--font-heading);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+    border: 2px solid transparent;
+}
+
+.btn-primary {
+    background: var(--secondary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
+.btn-secondary {
+    background: transparent;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-secondary:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+.btn-tertiary {
+    background: var(--card-bg);
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+.btn-tertiary:hover {
+    background: var(--hover-bg);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* --- ABOUT SECTION --- */
+.about__container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.about__container p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+}
+
+/* --- SKILL CARDS ELEGANTES --- */
+.skills__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.skill-card {
+    background: var(--card-bg);
+    padding: 2rem 1.5rem;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid var(--border-color);
+    position: relative;
+    cursor: pointer;
+}
+
+.skill-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-medium);
+    border-color: var(--primary-color);
+}
+
+.skill-icon {
+    display: block;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.skill-card:hover .skill-icon {
+    transform: scale(1.15);
+}
+
+/* --- PROJECT CARDS PROFESIONALES --- */
+.projects__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2.5rem;
+    /* CENTRADO: Agregado para centrar el grid dentro de su contenedor padre */
+    justify-content: center; 
+    align-items: start; /* Asegura que las tarjetas se alineen en la parte superior si tienen diferentes alturas */
+    max-width: 1200px; /* Asegura que no se estire demasiado en pantallas grandes */
+    margin: 0 auto; /* Centra el contenedor del grid horizontalmente */
+}
+
+.project-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid var(--border-color);
+    position: relative;
+    cursor: pointer;
+    box-shadow: var(--shadow-light); /* Aplicar una sombra base a la tarjeta */
+}
+
+.project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-heavy);
+    border-color: var(--primary-color);
+}
+
+.project-card__img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    transition: all 0.4s ease;
+}
+
+.project-card:hover .project-card__img {
+    transform: scale(1.05);
+}
+
+.project-card__content {
+    padding: 2rem;
+}
+
+.project-card__title {
+    font-size: 1.5rem;
+    margin-bottom: 0.8rem;
+    color: var(--primary-color);
+}
+
+.project-card__description {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.project-card__links {
+    display: flex;
+    gap: 1rem;
+}
+
+/* --- EXPERIENCE BADGES SOFISTICADOS --- */
+.experience__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.experience-badge {
+    background: var(--card-bg);
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid var(--border-color);
+    position: relative;
+}
+
+.experience-badge img {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    margin-bottom: 1.5rem;
+    filter: grayscale(100%) opacity(0.7);
+    transition: all 0.3s ease;
+}
+
+.experience-badge:hover img {
+    filter: grayscale(0%) opacity(1);
+    transform: scale(1.1);
+}
+
+.experience-badge:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-medium);
+    border-color: var(--primary-color);
+}
+
+.experience-info h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    font-family: var(--font-heading);
+    color: var(--primary-color);
+}
+
+.experience-info p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+/* --- FORMULARIO DE CONTACTO MODERNO --- */
+.contact__description {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    color: var(--text-muted);
+}
+
+.contact__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.contact__form input,
+.contact__form textarea {
+    width: 100%;
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    color: var(--text-color);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.contact__form input:focus,
+.contact__form textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-light);
+    transform: translateY(-2px);
+}
+
+.contact__form input::placeholder,
+.contact__form textarea::placeholder {
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+
+/* --- FOOTER ELEGANTE --- */
+.footer {
+    background: var(--darker-bg);
+    text-align: center;
+    padding: 3rem 2rem;
+    border-top: 1px solid var(--border-color);
+    position: relative;
+}
+
+.footer__socials {
+    margin-bottom: 1.5rem;
+}
+
+.footer__socials a {
+    color: var(--text-muted);
+    font-size: 1.8rem;
+    margin: 0 1.2rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-block;
+}
+
+.footer__socials a:hover {
+    color: var(--primary-color);
+    transform: translateY(-5px);
+}
+
+.footer__copy {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* --- ANIMACIONES DE SCROLL --- */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- CURSOR PERSONALIZADO --- */
+.cursor {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    transition: all 0.1s ease;
+    z-index: 9999;
+    opacity: 0.7;
+    mix-blend-mode: difference;
+}
+
+.cursor-follower {
+    width: 35px;
+    height: 35px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    z-index: 9998;
+    opacity: 0.1;
+}
+
+/* Cursor más sutil en tema claro */
+[data-theme="blue"] .cursor {
+    mix-blend-mode: normal;
+    opacity: 0.8;
+}
+
+[data-theme="blue"] .cursor-follower {
+    opacity: 0.08;
+}
+
+/* --- LOADING ANIMATION --- */
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--dark-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    transition: opacity 0.5s, visibility 0.5s;
+}
+
+/* Loader en tema claro */
+[data-theme="blue"] .loader {
+    background: var(--dark-bg);
+}
+
+.loader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader-inner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid var(--border-color);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* --- RESPONSIVE MEJORADO --- */
+@media (max-width: 768px) {
+    .hero__title { 
+        font-size: 2.5rem; 
+    }
+    
+    .section__title { 
+        font-size: 2.2rem; 
+    }
+    
+    .buttons { 
+        width: 90%; 
+    }
+    
+    .skills__grid { 
+        gap: 1.2rem; 
+    }
+    
+    .project-card__links { 
+        flex-direction: column; 
+    }
+    
+    .cursor, 
+    .cursor-follower { 
+        display: none; 
+    }
+    
+    .about__image {
+        width: 150px;
+        height: 150px;
+    }
+}
+/* ===== ESTILOS ADICIONALES PARA SISTEMA DE IDIOMAS ===== */
+
+/* Indicador visual de idioma */
+.language-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--primary-color);
+    color: var(--dark-bg);
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.8rem;
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    box-shadow: var(--shadow-medium);
+    backdrop-filter: blur(10px);
+}
+
+/* Indicador en tema claro */
+[data-theme="blue"] .language-indicator {
+    background: var(--primary-color);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Tooltip del botón de idiomas */
+.languages {
+    position: relative;
+    overflow: visible;
+}
+
+.languages::after {
+    content: 'ES→EN→DE';
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    background: var(--card-bg);
+    padding: 4px 8px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.languages:hover::after {
+    opacity: 1;
+    bottom: -20px;
+}
+
+/* Tema claro para tooltip */
+[data-theme="blue"] .languages::after {
+    background: white;
+    color: var(--text-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Animación suave para cambios de contenido */
+.fade-translate {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.fade-translate.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Efecto de pulso para el botón de idiomas cuando se activa */
+.languages.active {
+    animation: languagePulse 0.6s ease;
+}
+
+@keyframes languagePulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+}
+
+/* Mejora visual para transiciones de texto */
+.translating {
+    transition: opacity 0.2s ease;
+}
+
+.translating.fade-out {
+    opacity: 0.7;
+}
+
+/* Responsive para el indicador de idioma */
+@media (max-width: 768px) {
+    .language-indicator {
+        top: 15px;
+        right: 15px;
+        font-size: 0.7rem;
+        padding: 6px 10px;
+    }
+    
+    .languages::after {
+        font-size: 0.5rem;
+        bottom: -20px;
+    }
+    
+    .languages:hover::after {
+        bottom: -15px;
+    }
+}
+
+/* Animación de entrada para elementos traducidos */
+@keyframes translateIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.translate-in {
+    animation: translateIn 0.3s ease forwards;
+}
+
+/* Mejora de accesibilidad para cambios de idioma */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Notificación de cambio de idioma para lectores de pantalla */
+.language-change-notification {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+/* Efecto hover mejorado para el botón de idiomas */
+.languages:hover {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    transform: scale(1.1) translateY(-1px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="blue"] .languages:hover {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    box-shadow: 0 8px 25px rgba(44, 82, 130, 0.3);
+}
+
+/* Indicador de idioma activo en el botón */
+.languages .current-lang {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: var(--accent-color);
+    color: var(--dark-bg);
+    font-size: 0.6rem;
+    padding: 2px 4px;
+    border-radius: 8px;
+    font-weight: bold;
+    min-width: 20px;
+    text-align: center;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.3s ease;
+}
+
+.languages:hover .current-lang {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Animación de texto deslizante para cambios suaves */
+.slide-text-change {
+    position: relative;
+    overflow: hidden;
+}
+
+.slide-text-change .text-content {
+    transition: transform 0.3s ease;
+}
+
+.slide-text-change.changing .text-content {
+    transform: translateY(-100%);
+}
+
+.slide-text-change .new-text {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+}
+
+.slide-text-change.changing .new-text {
+    transform: translateY(-100%);
+}
