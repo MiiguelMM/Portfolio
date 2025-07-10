@@ -392,7 +392,7 @@ const translations = {
         spyzerDescription: "In Entwicklung: Eine Fintech-Plattform für Echtzeit-SP500-Tracking und Portfolio-Management.",
         viewDemo: "Demo ansehen",
         viewCode: "Code",
-        experienceTitle: "Berufserfahrung",
+        experienceTitle: "Erfahrung",
         hpRole: "Software-Entwickler (Apr. 2025 - Mai 2025)",
         hexcelRole: "Produktionsoperator (Jan. 2024 - Aug. 2024)",
         lillyRole: "Produktionsoperator (Feb. 2022 - Jul. 2023)",
