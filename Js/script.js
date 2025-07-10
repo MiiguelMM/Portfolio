@@ -35,9 +35,9 @@ const menuItems = {
 function createHamburgerMenu() {
     // Verificar si ya existe
     if (document.querySelector('.hamburger-menu')) return;
-    
+
     const currentMenuItems = menuItems[currentLanguage] || menuItems['es'];
-    
+
     const menu = document.createElement('div');
     menu.className = 'hamburger-menu';
     menu.innerHTML = `
@@ -76,9 +76,9 @@ function createHamburgerMenu() {
             </div>
         </div>
     `;
-    
+
     document.body.appendChild(menu);
-    
+
     // Event listeners
     setupHamburgerEventListeners();
 }
@@ -89,40 +89,40 @@ function setupHamburgerEventListeners() {
     const closeBtn = menu.querySelector('.hamburger-close');
     const backdrop = menu.querySelector('.hamburger-backdrop');
     const navItems = menu.querySelectorAll('.hamburger-nav-item');
-    
+
     // Cerrar menú
     closeBtn.addEventListener('click', closeHamburgerMenu);
     backdrop.addEventListener('click', closeHamburgerMenu);
-    
+
     // Navegación con scroll suave y cierre automático
     navItems.forEach(item => {
         item.addEventListener('click', (e) => {
             e.preventDefault();
             const targetId = item.getAttribute('href').substring(1);
             const targetSection = document.getElementById(targetId);
-            
+
             if (targetSection) {
                 // Cerrar menú primero con animación
                 closeHamburgerMenu();
-                
+
                 // Scroll suave después de un pequeño delay
                 setTimeout(() => {
                     targetSection.scrollIntoView({
                         behavior: 'smooth',
                         block: 'start'
                     });
-                    
+
                     // Actualizar indicador activo
                     updateActiveMenuItem(targetId);
                 }, 300);
             }
         });
-        
+
         // Efecto hover con sonido visual
         item.addEventListener('mouseenter', () => {
             item.style.transform = 'translateX(10px)';
         });
-        
+
         item.addEventListener('mouseleave', () => {
             item.style.transform = 'translateX(0)';
         });
@@ -134,16 +134,16 @@ function openHamburgerMenu() {
     createHamburgerMenu();
     const menu = document.querySelector('.hamburger-menu');
     const hamburgerBtn = document.querySelector('.navbar');
-    
+
     if (menu) {
         // Animaciones de apertura
         menu.classList.add('open');
         hamburgerBtn.classList.add('active');
         isHamburgerMenuOpen = true;
-        
+
         // Bloquear scroll del body
         document.body.classList.add('hamburger-menu-open');
-        
+
         // Animar elementos del menú con delay escalonado
         const navItems = menu.querySelectorAll('.hamburger-nav-item');
         navItems.forEach((item, index) => {
@@ -151,7 +151,7 @@ function openHamburgerMenu() {
                 item.classList.add('visible');
             }, 100 + (index * 50));
         });
-        
+
         // Actualizar el elemento activo basado en la posición actual
         updateActiveMenuItemFromScroll();
     }
@@ -161,15 +161,15 @@ function openHamburgerMenu() {
 function closeHamburgerMenu() {
     const menu = document.querySelector('.hamburger-menu');
     const hamburgerBtn = document.querySelector('.navbar');
-    
+
     if (menu) {
         menu.classList.remove('open');
         hamburgerBtn.classList.remove('active');
         isHamburgerMenuOpen = false;
-        
+
         // Restaurar scroll del body
         document.body.classList.remove('hamburger-menu-open');
-        
+
         // Remover el menú después de la animación
         setTimeout(() => {
             if (menu.parentNode) {
@@ -182,7 +182,7 @@ function closeHamburgerMenu() {
 // Función para alternar el menú
 function toggleHamburgerMenu(e) {
     e.stopPropagation();
-    
+
     if (!isHamburgerMenuOpen) {
         openHamburgerMenu();
     } else {
@@ -207,18 +207,18 @@ function updateActiveMenuItem(activeId) {
 function updateActiveMenuItemFromScroll() {
     const sections = document.querySelectorAll('section[id]');
     const scrollY = window.scrollY + 100; // Offset para el header
-    
+
     let currentSection = 'home';
-    
+
     sections.forEach(section => {
         const sectionTop = section.offsetTop;
         const sectionHeight = section.offsetHeight;
-        
+
         if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
             currentSection = section.id;
         }
     });
-    
+
     updateActiveMenuItem(currentSection);
 }
 
@@ -236,31 +236,31 @@ function updateHamburgerMenuLanguage() {
 // Función para inicializar el sistema de menú hamburguesa
 function initializeHamburgerMenu() {
     const hamburgerBtn = document.querySelector('.navbar');
-    
+
     if (hamburgerBtn) {
         // Event listener para el botón
         hamburgerBtn.addEventListener('click', toggleHamburgerMenu);
-        
+
         // Agregar tooltip
         hamburgerBtn.setAttribute('title', 'Menú de navegación');
     }
-    
+
     // Cerrar menú con Escape
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && isHamburgerMenuOpen) {
             closeHamburgerMenu();
         }
     });
-    
+
     // Cerrar menú al hacer clic fuera
     document.addEventListener('click', (e) => {
-        if (isHamburgerMenuOpen && 
-            !e.target.closest('.hamburger-menu') && 
+        if (isHamburgerMenuOpen &&
+            !e.target.closest('.hamburger-menu') &&
             !e.target.closest('.navbar')) {
             closeHamburgerMenu();
         }
     });
-    
+
     // Actualizar elemento activo al hacer scroll
     let scrollTimeout;
     window.addEventListener('scroll', () => {
@@ -269,7 +269,7 @@ function initializeHamburgerMenu() {
             scrollTimeout = setTimeout(updateActiveMenuItemFromScroll, 100);
         }
     });
-    
+
     // Cerrar menú al redimensionar ventana
     window.addEventListener('resize', () => {
         if (isHamburgerMenuOpen && window.innerWidth > 768) {
@@ -323,11 +323,11 @@ const translations = {
         footerCopy: "© 2025 Miguel. Todos los derechos reservados.",
         languageNames: {
             es: "Español",
-            en: "English", 
+            en: "English",
             de: "Deutsch"
         }
     },
-    
+
     en: {
         pageTitle: "Miguel's Portfolio | Full Stack Developer",
         changeLanguage: "Change language",
@@ -369,7 +369,7 @@ const translations = {
             de: "Deutsch"
         }
     },
-    
+
     de: {
         pageTitle: "Miguels Portfolio | Full Stack Entwickler",
         changeLanguage: "Sprache ändern",
@@ -428,26 +428,26 @@ function changeLanguage() {
     // Avanzar al siguiente idioma en el ciclo
     currentLanguageIndex = (currentLanguageIndex + 1) % languageOrder.length;
     currentLanguage = languageOrder[currentLanguageIndex];
-    
+
     // Guardar la preferencia en localStorage
     localStorage.setItem('preferredLanguage', currentLanguage);
-    
+
     // Aplicar las traducciones
     applyTranslationsWithAnimation();
-    
+
     // Actualizar el atributo lang del HTML
     document.documentElement.setAttribute('lang', currentLanguage);
-    
+
     // Animación visual del botón
     const languageBtn = document.querySelector('.languages');
     languageBtn.style.transform = 'scale(0.9)';
     setTimeout(() => {
         languageBtn.style.transform = 'scale(1)';
     }, 150);
-    
+
     // Mostrar indicador visual del idioma actual
     showLanguageIndicator();
-    
+
     // Actualizar menú hamburguesa si está abierto
     updateHamburgerMenuLanguage();
 }
@@ -459,12 +459,12 @@ function showLanguageIndicator() {
     if (existingIndicator) {
         existingIndicator.remove();
     }
-    
+
     // Crear nuevo indicador
     const indicator = document.createElement('div');
     indicator.className = 'language-indicator';
     indicator.textContent = currentLanguage.toUpperCase();
-    
+
     // Estilos del indicador
     indicator.style.cssText = `
         position: fixed;
@@ -482,15 +482,15 @@ function showLanguageIndicator() {
         transition: all 0.3s ease;
         pointer-events: none;
     `;
-    
+
     document.body.appendChild(indicator);
-    
+
     // Animación de entrada
     setTimeout(() => {
         indicator.style.opacity = '1';
         indicator.style.transform = 'translateY(0)';
     }, 10);
-    
+
     // Remover después de 2 segundos
     setTimeout(() => {
         indicator.style.opacity = '0';
@@ -546,18 +546,18 @@ const elementTranslationMap = {
 function applyTranslationsWithAnimation() {
     const currentTranslations = translations[currentLanguage];
     document.title = currentTranslations.pageTitle;
-    
+
     Object.entries(elementTranslationMap).forEach(([selector, translationKey]) => {
         const elements = document.querySelectorAll(selector);
-        
+
         elements.forEach(element => {
             const translation = currentTranslations[translationKey];
-            
+
             if (translation) {
                 element.classList.add('translating');
-                
+
                 setTimeout(() => {
-                    if (selector.includes('aria-label') || 
+                    if (selector.includes('aria-label') ||
                         ['.languages', '.theme', '.navbar', '.logo a'].includes(selector)) {
                         element.setAttribute('aria-label', translation);
                     } else if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
@@ -565,13 +565,13 @@ function applyTranslationsWithAnimation() {
                     } else {
                         element.innerHTML = translation;
                     }
-                    
+
                     element.classList.remove('translating');
                 }, 150);
             }
         });
     });
-    
+
     handleSpecialCases(currentTranslations);
 }
 
@@ -579,12 +579,12 @@ function handleSpecialCases(translations) {
     setTimeout(() => {
         const demoBtns = document.querySelectorAll('.btn-tertiary');
         demoBtns.forEach(btn => {
-            if (btn.textContent.includes('Demo') || btn.textContent.includes('Ver') || 
+            if (btn.textContent.includes('Demo') || btn.textContent.includes('Ver') ||
                 btn.textContent.includes('View') || btn.textContent.includes('ansehen')) {
                 btn.textContent = translations.viewDemo;
             }
         });
-        
+
         const codeBtns = document.querySelectorAll('.project-card .btn-secondary');
         codeBtns.forEach(btn => {
             btn.textContent = translations.viewCode;
@@ -596,7 +596,7 @@ function initializeLanguageSystem() {
     // Cargar idioma guardado o detectar idioma del navegador
     const savedLanguage = localStorage.getItem('preferredLanguage');
     const browserLanguage = navigator.language.split('-')[0];
-    
+
     if (savedLanguage && languageOrder.includes(savedLanguage)) {
         currentLanguage = savedLanguage;
     } else if (languageOrder.includes(browserLanguage)) {
@@ -604,16 +604,16 @@ function initializeLanguageSystem() {
     } else {
         currentLanguage = 'es'; // Idioma por defecto
     }
-    
+
     // Establecer índice actual
     currentLanguageIndex = languageOrder.indexOf(currentLanguage);
-    
+
     // Aplicar traducciones iniciales
     applyTranslationsWithAnimation();
-    
+
     // Configurar el atributo lang del HTML
     document.documentElement.setAttribute('lang', currentLanguage);
-    
+
     // Agregar event listener a TODOS los botones de idiomas (móvil y desktop)
     const languageBtns = document.querySelectorAll('.languages');
     languageBtns.forEach(btn => {
@@ -628,7 +628,7 @@ function initializeLanguageSystem() {
 function toggleTheme() {
     const body = document.body;
     const currentTheme = body.getAttribute('data-theme');
-    
+
     if (currentTheme === 'blue') {
         body.removeAttribute('data-theme');
         localStorage.setItem('theme', 'dark');
@@ -651,17 +651,17 @@ function hideLoader() {
 function createParticles() {
     const particlesContainer = document.getElementById('particles');
     if (!particlesContainer) return;
-    
+
     const particleCount = 50;
-    
+
     for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
         particle.className = 'particle';
-        
+
         particle.style.left = Math.random() * 100 + '%';
         particle.style.animationDelay = Math.random() * 20 + 's';
         particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
-        
+
         particlesContainer.appendChild(particle);
     }
 }
@@ -669,36 +669,36 @@ function createParticles() {
 function initCustomCursor() {
     const cursor = document.querySelector('.cursor');
     const cursorFollower = document.querySelector('.cursor-follower');
-    
+
     if (!cursor || !cursorFollower) return;
-    
+
     let mouseX = 0, mouseY = 0;
     let followerX = 0, followerY = 0;
-    
+
     document.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
-        
+
         cursor.style.left = mouseX + 'px';
         cursor.style.top = mouseY + 'px';
     });
-    
+
     function animateFollower() {
         followerX += (mouseX - followerX) * 0.1;
         followerY += (mouseY - followerY) * 0.1;
-        
+
         cursorFollower.style.left = followerX + 'px';
         cursorFollower.style.top = followerY + 'px';
-        
+
         requestAnimationFrame(animateFollower);
     }
-    
+
     animateFollower();
 }
 
 function handleScrollAnimations() {
     const elements = document.querySelectorAll('.fade-in');
-    
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -709,53 +709,83 @@ function handleScrollAnimations() {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     });
-    
+
     elements.forEach(element => {
         observer.observe(element);
     });
 }
 
 // Inicialización principal
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Cargar tema guardado
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'blue') {
         document.body.setAttribute('data-theme', 'blue');
     }
-    
+
     // Inicializar todos los sistemas
     initializeLanguageSystem();
     initializeHamburgerMenu(); // ¡Nuevo sistema de menú hamburguesa!
     createParticles();
     initCustomCursor();
     handleScrollAnimations();
-    
+
     // Ocultar loader
     setTimeout(hideLoader, 1000);
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Cargar tema guardado
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'blue') {
         document.body.setAttribute('data-theme', 'blue');
     }
-    
+
     // Sincronizar TODOS los botones de tema (móvil y desktop)
     const themeBtns = document.querySelectorAll('.theme');
     themeBtns.forEach(btn => {
         btn.addEventListener('click', toggleTheme);
     });
-    
+
     // Inicializar todos los sistemas
     initializeLanguageSystem();
     initializeHamburgerMenu();
     createParticles();
     initCustomCursor();
     handleScrollAnimations();
-    
+
     // Ocultar loader
     setTimeout(hideLoader, 1000);
+});
+
+// Inicializar EmailJS
+emailjs.init({
+    publicKey: "4ycG7kxE89bcvayF_"
+});
+
+// Manejar envío del formulario de contacto
+document.querySelector('.contact__form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    // Mostrar loading
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Enviando...';
+    submitBtn.disabled = true;
+
+    emailjs.sendForm('service_bpdnbop', 'template_if725cz', this)
+        .then(function () {
+            alert('¡Mensaje enviado correctamente!');
+            document.querySelector('.contact__form').reset();
+        })
+        .catch(function (error) {
+            alert('Error al enviar el mensaje: ' + error.text);
+            console.error('EmailJS Error:', error);
+        })
+        .finally(function () {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        });
 });
 
 window.addEventListener('load', hideLoader);
