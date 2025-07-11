@@ -292,6 +292,14 @@ const translations = {
         changeTheme: "Cambiar tema de color",
         openMenu: "Abrir menú de navegación",
         backToHome: "Volver al inicio",
+        // Navegación desktop
+        navHome: "Inicio",
+        navAbout: "Sobre Mí",
+        navSkills: "Habilidades",
+        navProjects: "Proyectos",
+        navExperience: "Experiencia",
+        navContact: "Contacto",
+        // Resto del contenido
         heroTitle: "Miguel",
         heroSubtitle: "Full Stack Developer<br>Java & React",
         heroDescription: "Con 3 años de experiencia industrial en Eli Lilly, Hexcel y más. Ahora especializado en desarrollo Full Stack, creando soluciones digitales que aportan valor real a las empresas.",
@@ -334,6 +342,14 @@ const translations = {
         changeTheme: "Change color theme",
         openMenu: "Open navigation menu",
         backToHome: "Back to home",
+        // Navegación desktop
+        navHome: "Home",
+        navAbout: "About Me",
+        navSkills: "Skills",
+        navProjects: "Projects",
+        navExperience: "Experience",
+        navContact: "Contact",
+        // Resto del contenido
         heroTitle: "Miguel",
         heroSubtitle: "Full Stack Developer<br>Java & React",
         heroDescription: "With 3 years of industrial experience at Eli Lilly, Hexcel and more. Now specialized in Full Stack development, creating digital solutions that bring real value to companies.",
@@ -344,7 +360,7 @@ const translations = {
         viewLinkedIn: "View LinkedIn profile",
         skillsTitle: "Technical Skills",
         projectsTitle: "Projects",
-        ccrmTitle: "Complete Enterprise Management System (ERP-CRM)",
+        crmTitle: "Complete Enterprise Management System (ERP-CRM)",
         crmDescription: "A full-featured business management platform that streamlines operations by bringing customers, products, sales, and inventory into one centralized system. The platform offers real-time analytics through an interactive dashboard, automated PDF reporting, and email notifications. Built using Spring Boot for the backend and React for the frontend, with PostgreSQL database and cloud deployment on Render. The responsive design includes smart filtering and advanced search functionality, showcasing modern full-stack development for enterprise-grade solutions. <br><br>*NOTE: Initial load may take ~30-60 seconds (free server on standby)",
         spyzerTitle: "Spyzer",
         spyzerDescription: "In development: fintech platform for real-time SP500 tracking.",
@@ -376,6 +392,14 @@ const translations = {
         changeTheme: "Farbthema ändern",
         openMenu: "Navigationsmenü öffnen",
         backToHome: "Zurück zur Startseite",
+        // Navegación desktop
+        navHome: "Startseite",
+        navAbout: "Über mich",
+        navSkills: "Fähigkeiten",
+        navProjects: "Projekte",
+        navExperience: "Erfahrung",
+        navContact: "Kontakt",
+        // Resto del contenido
         heroTitle: "Miguel",
         heroSubtitle: "Full Stack Entwickler<br>Java & React",
         heroDescription: "Mit drei Jahren Industrieerfahrung bei Eli Lilly, Hexcel und anderen Unternehmen. Heute spezialisiere ich mich auf Full Stack-Entwicklung und entwickle digitale Lösungen, die Unternehmen echten Mehrwert bieten.",
@@ -503,7 +527,7 @@ function showLanguageIndicator() {
     }, 2000);
 }
 
-// Mapeo de elementos (mantenido igual)
+// Mapeo de elementos (ACTUALIZADO con navegación desktop)
 const elementTranslationMap = {
     'title': 'pageTitle',
     'html': 'lang',
@@ -511,6 +535,14 @@ const elementTranslationMap = {
     '.theme': 'changeTheme',
     '.navbar': 'openMenu',
     '.logo a': 'backToHome',
+    // Navegación desktop - elementos específicos
+    '.desktop-nav-item[href="#home"]': 'navHome',
+    '.desktop-nav-item[href="#about"]': 'navAbout',
+    '.desktop-nav-item[href="#skills"]': 'navSkills',
+    '.desktop-nav-item[href="#projects"]': 'navProjects',
+    '.desktop-nav-item[href="#experience"]': 'navExperience',
+    '.desktop-nav-item[href="#contact"]': 'navContact',
+    // Resto del contenido
     '.hero__title': 'heroTitle',
     '.hero__subtitle': 'heroSubtitle',
     '.hero__description': 'heroDescription',
@@ -716,24 +748,6 @@ function handleScrollAnimations() {
 }
 
 // Inicialización principal
-document.addEventListener('DOMContentLoaded', function () {
-    // Cargar tema guardado
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'blue') {
-        document.body.setAttribute('data-theme', 'blue');
-    }
-
-    // Inicializar todos los sistemas
-    initializeLanguageSystem();
-    initializeHamburgerMenu(); // ¡Nuevo sistema de menú hamburguesa!
-    createParticles();
-    initCustomCursor();
-    handleScrollAnimations();
-
-    // Ocultar loader
-    setTimeout(hideLoader, 1000);
-});
-
 document.addEventListener('DOMContentLoaded', function () {
     // Cargar tema guardado
     const savedTheme = localStorage.getItem('theme');
