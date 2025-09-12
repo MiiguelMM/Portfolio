@@ -126,8 +126,8 @@ body:not([data-theme="blue"])::before {
 /* Partículas más grandes en tema blanco para desktop */
 @media (min-width: 768px) {
     [data-theme="blue"] .particle {
-        width: 5px;
-        height: 5px;
+        width: 4px;
+        height: 4px;
     }
 }
 
@@ -1858,7 +1858,7 @@ h1, h2, h3 {
    }
    
    body {
-       padding-top: 100px;
+       padding-top: 10px;
    }
    
    .logo__Image {
@@ -1867,7 +1867,7 @@ h1, h2, h3 {
    }
    
    .desktop-nav-item {
-       font-size: 1.2rem;  
+       font-size: 1.3rem;  
        font-weight: 600;   
        letter-spacing: 0.8px;
        padding: 0.8rem 0;
@@ -1906,8 +1906,8 @@ h1, h2, h3 {
    }
    
    .about__image {
-       width: 210px;
-       height: 210px;
+       width: 235px;
+       height: 235px;
        margin: 2.1rem auto;
    }
    
@@ -2058,7 +2058,7 @@ h1, h2, h3 {
     }
     
     body {
-        padding-top: 100px;
+        padding-top: 10px;
     }
     
     .logo__Image {
@@ -2091,7 +2091,7 @@ h1, h2, h3 {
     }
     
     body {
-        padding-top: 85px;
+        padding-top: 15px;
     }
     
     /* Logo más pequeño */
