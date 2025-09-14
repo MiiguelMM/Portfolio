@@ -2217,7 +2217,7 @@ h3 {
 
     .logo__Image {
         max-width: clamp(90px, 18vw, 232px) !important;
-        max-height: clamp(90px, 18vh, 232px) !important;
+        max-height: clamp(90px, 22vh, 232px) !important;
         height: auto !important;
         object-fit: contain !important;
         margin-bottom: 100px;
@@ -2610,52 +2610,6 @@ h3 {
     header::-webkit-scrollbar-thumb {
         background: var(--primary-color) !important;
         border-radius: clamp(1px, 0.2vh, 3px) !important;
-    }
-}
-/* ===== FIX PARA PANTALLAS 1024px - 1235px ===== */
-@media (min-width: 1024px) {
-    /* Proyectos específicos para este rango - 2 COLUMNAS */
-    .projects__grid {
-        display: grid !important;
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: clamp(1.2rem, 2vh, 1.8rem) !important;
-        max-width: clamp(600px, 85vw, 900px) !important;
-        width: 100% !important;
-        justify-items: center !important;
-        padding: 0 !important;
-        margin: 0 auto !important;
-    }
-
-    .project-card {
-        width: 100% !important;
-        max-width: 100% !important;
-    }
-
-    .project-card__img {
-        height: clamp(200px, 24vh, 280px) !important; /* FOTO MÁS GRANDE */
-    }
-
-    .project-card__content {
-        padding: clamp(1.2rem, 2vh, 1.6rem) !important; /* MENOS PADDING */
-        min-height: clamp(120px, 18vh, 160px) !important; /* CONTENIDO MÁS COMPACTO */
-    }
-
-    .project-card__title {
-        font-size: clamp(1.1rem, 1.8vh, 1.3rem) !important;
-        margin-bottom: clamp(0.5rem, 0.8vh, 0.7rem) !important;
-    }
-
-    .project-card__description {
-        font-size: clamp(0.9rem, 1.4vh, 1rem) !important;
-        margin-bottom: clamp(1rem, 1.5vh, 1.3rem) !important;
-        line-height: 1.5 !important;
-    }
-
-    .project-card__links .btn {
-        flex: 1 !important;
-        min-width: clamp(90px, 18vw, 120px) !important;
-        padding: clamp(8px, 1vh, 10px) clamp(16px, 3vw, 20px) !important;
-        font-size: clamp(0.75rem, 1.1vh, 0.85rem) !important;
     }
 }
 
