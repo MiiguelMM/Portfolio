@@ -474,6 +474,10 @@ function changeLanguage() {
 
     // Actualizar menú hamburguesa si está abierto
     updateHamburgerMenuLanguage();
+
+    if (window.innerWidth >= 1024) {
+    updateSidebarTexts();
+}
 }
 
 // Función para mostrar indicador visual del idioma actual
@@ -803,3 +807,620 @@ document.querySelector('.contact__form').addEventListener('submit', function (e)
 });
 
 window.addEventListener('load', hideLoader);
+// JavaScript simple y funcional para diseño horizontal
+document.addEventListener('DOMContentLoaded', function() {
+    // SOLO ejecutar en desktop (1024px o más)
+    if (window.innerWidth >= 1024) {
+        initHorizontalDesktop();
+    }
+});
+
+// También verificar en resize
+window.addEventListener('resize', function() {
+    const isDesktop = window.innerWidth >= 1024;
+    const navExists = document.querySelector('.desktop-horizontal-nav');
+    
+    if (isDesktop && !navExists) {
+        // Cambió a desktop y no existe navegación
+        initHorizontalDesktop();
+    } else if (!isDesktop && navExists) {
+        // Cambió a móvil y existe navegación, removerla
+        removeDesktopElements();
+    }
+});
+
+function initHorizontalDesktop() {
+    // Solo proceder si estamos en desktop
+    if (window.innerWidth < 1024) return;
+    
+    console.log('Inicializando diseño horizontal');
+    
+    // Crear navegación en el header
+    createSidebarNavigation();
+    
+    // Crear indicadores de navegación
+    createNavigationDots();
+    
+    // Configurar scroll horizontal
+    setupHorizontalScroll();
+    
+    // Configurar navegación activa
+    updateActiveNavigation();
+}
+
+function removeDesktopElements() {
+    // Remover elementos desktop cuando se cambia a móvil
+    const elementsToRemove = [
+        '.desktop-horizontal-nav',
+        '.sidebar-controls',
+        '.horizontal-dots'
+    ];
+    
+    elementsToRemove.forEach(selector => {
+        const element = document.querySelector(selector);
+        if (element) {
+            element.remove();
+        }
+    });
+}
+
+function createSidebarNavigation() {
+    const header = document.querySelector('header');
+    if (!header || window.innerWidth < 1024) return;
+    
+    // Verificar si ya existe para evitar duplicados
+    if (document.querySelector('.desktop-horizontal-nav')) return;
+    
+    // Crear contenedor de navegación
+    const navContainer = document.createElement('div');
+    navContainer.className = 'desktop-horizontal-nav';
+    
+    // Crear enlaces de navegación
+    const navItems = [
+        { href: '#home', icon: 'fas fa-home', text: 'Inicio' },
+        { href: '#about', icon: 'fas fa-user', text: 'Sobre Mí' },
+        { href: '#skills', icon: 'fas fa-code', text: 'Habilidades' },
+        { href: '#projects', icon: 'fas fa-laptop-code', text: 'Proyectos' },
+        { href: '#experience', icon: 'fas fa-briefcase', text: 'Experiencia' },
+        { href: '#contact', icon: 'fas fa-envelope', text: 'Contacto' }
+    ];
+    
+    navItems.forEach((item, index) => {
+        const link = document.createElement('a');
+        link.className = 'desktop-nav-link';
+        if (index === 0) link.classList.add('active');
+        link.href = item.href;
+        link.innerHTML = `<i class="${item.icon}"></i>${item.text}`;
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            goToSection(index);
+            updateActiveLink(link);
+        });
+        navContainer.appendChild(link);
+    });
+    
+    // Crear controles del sidebar
+    const controlsContainer = document.createElement('div');
+    controlsContainer.className = 'sidebar-controls';
+    
+    // Botón de idioma
+    const langBtn = document.createElement('button');
+    langBtn.className = 'sidebar-btn';
+    langBtn.innerHTML = '<i class="fas fa-globe"></i>Idioma';
+    langBtn.addEventListener('click', () => {
+        const originalBtn = document.querySelector('.navItems .languages');
+        if (originalBtn) originalBtn.click();
+    });
+    
+    // Botón de tema
+    const themeBtn = document.createElement('button');
+    themeBtn.className = 'sidebar-btn';
+    themeBtn.innerHTML = '<i class="fas fa-palette"></i>Tema';
+    themeBtn.addEventListener('click', () => {
+        const originalBtn = document.querySelector('.navItems .theme');
+        if (originalBtn) originalBtn.click();
+    });
+    
+    controlsContainer.appendChild(langBtn);
+    controlsContainer.appendChild(themeBtn);
+    
+    // Insertar después del logo
+    const logo = header.querySelector('.logo');
+    if (logo) {
+        logo.insertAdjacentElement('afterend', navContainer);
+        header.appendChild(controlsContainer);
+    }
+}
+
+function createNavigationDots() {
+    if (window.innerWidth < 1024) return;
+    
+    // Verificar si ya existen para evitar duplicados
+    if (document.querySelector('.horizontal-dots')) return;
+    
+    // Crear contenedor de dots
+    const dotsContainer = document.createElement('div');
+    dotsContainer.className = 'horizontal-dots';
+    
+    // Crear 6 dots para las 6 secciones
+    for (let i = 0; i < 6; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'nav-dot';
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => {
+            goToSection(i);
+            updateActiveDot(dot);
+        });
+        dotsContainer.appendChild(dot);
+    }
+    
+    document.body.appendChild(dotsContainer);
+}
+
+function setupHorizontalScroll() {
+    const main = document.querySelector('main');
+    if (!main) return;
+    
+    let isScrolling = false;
+    
+    // Scroll con rueda del mouse
+    main.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        
+        if (isScrolling) return;
+        isScrolling = true;
+        
+        const currentSection = getCurrentSection();
+        let targetSection = currentSection;
+        
+        if (e.deltaY > 0 && currentSection < 5) {
+            targetSection = currentSection + 1;
+        } else if (e.deltaY < 0 && currentSection > 0) {
+            targetSection = currentSection - 1;
+        }
+        
+        if (targetSection !== currentSection) {
+            goToSection(targetSection);
+        }
+        
+        setTimeout(() => {
+            isScrolling = false;
+        }, 800);
+        
+    }, { passive: false });
+    
+    // Navegación con teclado
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            const current = getCurrentSection();
+            if (current < 5) goToSection(current + 1);
+        } else if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            const current = getCurrentSection();
+            if (current > 0) goToSection(current - 1);
+        }
+    });
+    
+    // Actualizar navegación en scroll manual
+    main.addEventListener('scroll', () => {
+        updateActiveNavigation();
+    });
+}
+
+function getCurrentSection() {
+    const main = document.querySelector('main');
+    const sidebarWidth = getSidebarWidth();
+    const sectionWidth = window.innerWidth - sidebarWidth;
+    return Math.round(main.scrollLeft / sectionWidth);
+}
+
+function getSidebarWidth() {
+    if (window.innerWidth >= 1600) return 400;
+    if (window.innerWidth >= 1366) return 300;
+    return 280;
+}
+
+function goToSection(index) {
+    const main = document.querySelector('main');
+    const sidebarWidth = getSidebarWidth();
+    const sectionWidth = window.innerWidth - sidebarWidth;
+    
+    main.scrollTo({
+        left: index * sectionWidth,
+        behavior: 'smooth'
+    });
+    
+    updateActiveNavigation(index);
+}
+
+function updateActiveNavigation(sectionIndex = null) {
+    const currentSection = sectionIndex !== null ? sectionIndex : getCurrentSection();
+    
+    // Actualizar links del sidebar
+    const navLinks = document.querySelectorAll('.desktop-nav-link');
+    navLinks.forEach((link, index) => {
+        link.classList.toggle('active', index === currentSection);
+    });
+    
+    // Actualizar dots
+    const dots = document.querySelectorAll('.nav-dot');
+    dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentSection);
+    });
+}
+
+function updateActiveLink(activeLink) {
+    document.querySelectorAll('.desktop-nav-link').forEach(link => {
+        link.classList.remove('active');
+    });
+    activeLink.classList.add('active');
+}
+
+function updateActiveDot(activeDot) {
+    document.querySelectorAll('.nav-dot').forEach(dot => {
+        dot.classList.remove('active');
+    });
+    activeDot.classList.add('active');
+}
+
+// Función para reinicializar en caso de resize
+window.addEventListener('resize', () => {
+    if (window.innerWidth >= 1024) {
+        const navExists = document.querySelector('.desktop-horizontal-nav');
+        if (!navExists) {
+            location.reload();
+        }
+    }
+});
+
+console.log('JavaScript horizontal simple cargado');
+// JavaScript mejorado con soporte para traducción
+document.addEventListener('DOMContentLoaded', function() {
+    // SOLO ejecutar en desktop (1024px o más)
+    if (window.innerWidth >= 1024) {
+        initHorizontalDesktop();
+    }
+});
+
+// También verificar en resize
+window.addEventListener('resize', function() {
+    const isDesktop = window.innerWidth >= 1024;
+    const navExists = document.querySelector('.desktop-horizontal-nav');
+    
+    if (isDesktop && !navExists) {
+        // Cambió a desktop y no existe navegación
+        initHorizontalDesktop();
+    } else if (!isDesktop && navExists) {
+        // Cambió a móvil y existe navegación, removerla
+        removeDesktopElements();
+    }
+});
+
+function initHorizontalDesktop() {
+    // Solo proceder si estamos en desktop
+    if (window.innerWidth < 1024) return;
+    
+    console.log('Inicializando diseño horizontal');
+    
+    // Crear navegación en el header
+    createSidebarNavigation();
+    
+    // Crear indicadores de navegación
+    createNavigationDots();
+    
+    // Configurar scroll horizontal
+    setupHorizontalScroll();
+    
+    // Configurar navegación activa
+    updateActiveNavigation();
+}
+
+function removeDesktopElements() {
+    // Remover elementos desktop cuando se cambia a móvil
+    const elementsToRemove = [
+        '.desktop-horizontal-nav',
+        '.sidebar-controls',
+        '.horizontal-dots'
+    ];
+    
+    elementsToRemove.forEach(selector => {
+        const element = document.querySelector(selector);
+        if (element) {
+            element.remove();
+        }
+    });
+}
+
+// Función para obtener texto traducido
+ function getTranslatedText(key) {
+    // Obtener idioma actual - adapta esto a tu sistema de traducción
+    const currentLang = document.documentElement.lang || 'es';
+    
+    const translations = {
+        'es': {
+            'nav.home': 'Inicio',
+            'nav.about': 'Sobre Mí',
+            'nav.skills': 'Habilidades',
+            'nav.projects': 'Proyectos',
+            'nav.experience': 'Experiencia',
+            'nav.contact': 'Contacto',
+            'nav.language': 'Idioma',
+            'nav.theme': 'Tema'
+        },
+        'en': {
+            'nav.home': 'Home',
+            'nav.about': 'About Me',
+            'nav.skills': 'Skills',
+            'nav.projects': 'Projects',
+            'nav.experience': 'Experience',
+            'nav.contact': 'Contact',
+            'nav.language': 'Language',
+            'nav.theme': 'Theme'
+        },
+        'fr': {
+            'nav.home': 'Accueil',
+            'nav.about': 'À Propos',
+            'nav.skills': 'Compétences',
+            'nav.projects': 'Projets',
+            'nav.experience': 'Expérience',
+            'nav.contact': 'Contact',
+            'nav.language': 'Langue',
+            'nav.theme': 'Thème'
+        },
+        'de': {
+            'nav.home': 'Startseite',
+            'nav.about': 'Über Mich',
+            'nav.skills': 'Fähigkeiten',
+            'nav.projects': 'Projekte',
+            'nav.experience': 'Erfahrung',
+            'nav.contact': 'Kontakt',
+            'nav.language': 'Sprache',
+            'nav.theme': 'Thema'
+        }
+    };
+    
+    return translations[currentLang]?.[key] || translations['es'][key] || key;
+}
+
+function createSidebarNavigation() {
+    const header = document.querySelector('header');
+    if (!header || window.innerWidth < 1024) return;
+    
+    // Verificar si ya existe para evitar duplicados
+    if (document.querySelector('.desktop-horizontal-nav')) return;
+    
+    // Crear contenedor de navegación
+    const navContainer = document.createElement('div');
+    navContainer.className = 'desktop-horizontal-nav';
+    
+    // Crear enlaces de navegación con traducción
+    const navItems = [
+        { href: '#home', icon: 'fas fa-home', textKey: 'nav.home' },
+        { href: '#about', icon: 'fas fa-user', textKey: 'nav.about' },
+        { href: '#skills', icon: 'fas fa-code', textKey: 'nav.skills' },
+        { href: '#projects', icon: 'fas fa-laptop-code', textKey: 'nav.projects' },
+        { href: '#experience', icon: 'fas fa-briefcase', textKey: 'nav.experience' },
+        { href: '#contact', icon: 'fas fa-envelope', textKey: 'nav.contact' }
+    ];
+    
+    navItems.forEach((item, index) => {
+        const link = document.createElement('a');
+        link.className = 'desktop-nav-link';
+        if (index === 0) link.classList.add('active');
+        link.href = item.href;
+        link.innerHTML = `<i class="${item.icon}"></i>${getTranslatedText(item.textKey)}`;
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            goToSection(index);
+            updateActiveLink(link);
+        });
+        navContainer.appendChild(link);
+    });
+    
+    // Crear controles del sidebar
+    const controlsContainer = document.createElement('div');
+    controlsContainer.className = 'sidebar-controls';
+    
+    // Botón de idioma
+    const langBtn = document.createElement('button');
+    langBtn.className = 'sidebar-btn';
+    langBtn.innerHTML = `<i class="fas fa-globe"></i>${getTranslatedText('nav.language')}`;
+    langBtn.addEventListener('click', () => {
+        const originalBtn = document.querySelector('.navItems .languages');
+        if (originalBtn) originalBtn.click();
+    });
+    
+    // Botón de tema
+    const themeBtn = document.createElement('button');
+    themeBtn.className = 'sidebar-btn';
+    themeBtn.innerHTML = `<i class="fas fa-palette"></i>${getTranslatedText('nav.theme')}`;
+    themeBtn.addEventListener('click', () => {
+        const originalBtn = document.querySelector('.navItems .theme');
+        if (originalBtn) originalBtn.click();
+    });
+    
+    controlsContainer.appendChild(langBtn);
+    controlsContainer.appendChild(themeBtn);
+    
+    // Insertar después del logo
+    const logo = header.querySelector('.logo');
+    if (logo) {
+        logo.insertAdjacentElement('afterend', navContainer);
+        header.appendChild(controlsContainer);
+    }
+}
+
+// Función para actualizar textos cuando cambia el idioma
+function updateSidebarTexts() {
+    const navLinks = document.querySelectorAll('.desktop-nav-link');
+    const navItems = [
+        { textKey: 'nav.home' },
+        { textKey: 'nav.about' },
+        { textKey: 'nav.skills' },
+        { textKey: 'nav.projects' },
+        { textKey: 'nav.experience' },
+        { textKey: 'nav.contact' }
+    ];
+    
+    navLinks.forEach((link, index) => {
+        if (navItems[index]) {
+            const icon = link.querySelector('i').outerHTML;
+            link.innerHTML = `${icon}${getTranslatedText(navItems[index].textKey)}`;
+        }
+    });
+    
+    // Actualizar botones de control
+    const langBtn = document.querySelector('.sidebar-controls .sidebar-btn:first-child');
+    const themeBtn = document.querySelector('.sidebar-controls .sidebar-btn:last-child');
+    
+    if (langBtn) {
+        langBtn.innerHTML = `<i class="fas fa-globe"></i>${getTranslatedText('nav.language')}`;
+    }
+    
+    if (themeBtn) {
+        themeBtn.innerHTML = `<i class="fas fa-palette"></i>${getTranslatedText('nav.theme')}`;
+    }
+}
+
+// Escuchar cambios de idioma - adapta esto a tu sistema
+document.addEventListener('languageChanged', function(e) {
+    if (window.innerWidth >= 1024) {
+        updateSidebarTexts();
+    }
+});
+
+// Si tu sistema de traducción usa otra forma de notificar cambios, úsala aquí
+// Por ejemplo, si usas un MutationObserver o tienes una función global:
+window.addEventListener('translationComplete', function() {
+    if (window.innerWidth >= 1024) {
+        updateSidebarTexts();
+    }
+});
+
+// Resto del código JavaScript permanece igual...
+function createNavigationDots() {
+    if (window.innerWidth < 1024) return;
+    if (document.querySelector('.horizontal-dots')) return;
+    
+    const dotsContainer = document.createElement('div');
+    dotsContainer.className = 'horizontal-dots';
+    
+    for (let i = 0; i < 6; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'nav-dot';
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => {
+            goToSection(i);
+            updateActiveDot(dot);
+        });
+        dotsContainer.appendChild(dot);
+    }
+    
+    document.body.appendChild(dotsContainer);
+}
+
+function setupHorizontalScroll() {
+    const main = document.querySelector('main');
+    if (!main) return;
+    
+    let isScrolling = false;
+    
+    main.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        
+        if (isScrolling) return;
+        isScrolling = true;
+        
+        const currentSection = getCurrentSection();
+        let targetSection = currentSection;
+        
+        if (e.deltaY > 0 && currentSection < 5) {
+            targetSection = currentSection + 1;
+        } else if (e.deltaY < 0 && currentSection > 0) {
+            targetSection = currentSection - 1;
+        }
+        
+        if (targetSection !== currentSection) {
+            goToSection(targetSection);
+        }
+        
+        setTimeout(() => {
+            isScrolling = false;
+        }, 800);
+        
+    }, { passive: false });
+    
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            const current = getCurrentSection();
+            if (current < 5) goToSection(current + 1);
+        } else if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            const current = getCurrentSection();
+            if (current > 0) goToSection(current - 1);
+        }
+    });
+    
+    main.addEventListener('scroll', () => {
+        updateActiveNavigation();
+    });
+}
+
+function getCurrentSection() {
+    const main = document.querySelector('main');
+    const sidebarWidth = getSidebarWidth();
+    const sectionWidth = window.innerWidth - sidebarWidth;
+    return Math.round(main.scrollLeft / sectionWidth);
+}
+
+function getSidebarWidth() {
+    if (window.innerWidth >= 1920) return 380;
+    if (window.innerWidth >= 1440) return 320;
+    if (window.innerWidth >= 1280) return 300;
+    return 280;
+}
+
+function goToSection(index) {
+    const main = document.querySelector('main');
+    const sidebarWidth = getSidebarWidth();
+    const sectionWidth = window.innerWidth - sidebarWidth;
+    
+    main.scrollTo({
+        left: index * sectionWidth,
+        behavior: 'smooth'
+    });
+    
+    updateActiveNavigation(index);
+}
+
+function updateActiveNavigation(sectionIndex = null) {
+    const currentSection = sectionIndex !== null ? sectionIndex : getCurrentSection();
+    
+    const navLinks = document.querySelectorAll('.desktop-nav-link');
+    navLinks.forEach((link, index) => {
+        link.classList.toggle('active', index === currentSection);
+    });
+    
+    const dots = document.querySelectorAll('.nav-dot');
+    dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentSection);
+    });
+}
+
+function updateActiveLink(activeLink) {
+    document.querySelectorAll('.desktop-nav-link').forEach(link => {
+        link.classList.remove('active');
+    });
+    activeLink.classList.add('active');
+}
+
+function updateActiveDot(activeDot) {
+    document.querySelectorAll('.nav-dot').forEach(dot => {
+        dot.classList.remove('active');
+    });
+    activeDot.classList.add('active');
+}
+
+console.log('JavaScript horizontal con traducción cargado');
