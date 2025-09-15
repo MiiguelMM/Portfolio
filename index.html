@@ -99,8 +99,15 @@
         <section id="projects" class="section fade-in">
             <h2 class="section__title">Proyectos</h2>
             <div class="projects__grid">
-                <div class="project-card">
-                    <img src="./Assets/crm.png" alt="CRM Web App" class="project-card__img">
+                <div class="project-card" data-project="crm">
+                    <div class="project-card__image-container">
+                        <img src="./Assets/crm.png" alt="CRM Web App" class="project-card__img">
+                        <div class="project-card__overlay">
+                            <div class="project-card__eye-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                        </div>
+                    </div>
                     <div class="project-card__content">
                         <h3 class="project-card__title">CRM Web App</h3>
                         <p class="project-card__description">Proyecto Full Stack para gestionar relaciones con clientes.
@@ -111,8 +118,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="project-card">
-                    <img src="./Assets/proximamente.png" alt="Spyzer" class="project-card__img">
+                <div class="project-card" data-project="spyzer">
+                    <div class="project-card__image-container">
+                        <img src="./Assets/spyzer.png" alt="Spyzer" class="project-card__img">
+                        <div class="project-card__overlay">
+                            <div class="project-card__eye-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                        </div>
+                    </div>
                     <div class="project-card__content">
                         <h3 class="project-card__title">Spyzer</h3>
                         <p class="project-card__description">En desarrollo: plataforma fintech para seguimiento en
@@ -178,6 +192,37 @@
             </form>
         </section>
     </main>
+
+    <!-- Modal para información detallada de proyectos -->
+    <div class="project-modal" id="projectModal">
+        <div class="project-modal__content">
+            <div class="project-modal__header">
+                <img src="" alt="" class="project-modal__image" id="modalImage">
+                <button class="project-modal__close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="project-modal__body">
+                <h2 class="project-modal__title" id="modalTitle"></h2>
+                <p class="project-modal__description" id="modalDescription"></p>
+                
+                <div class="project-modal__details" id="modalDetails">
+                    <!-- Se llenará dinámicamente -->
+                </div>
+
+                <div class="project-modal__tech-stack">
+                    <h3 class="project-modal__tech-title">Tecnologías Utilizadas</h3>
+                    <div class="project-modal__tech-list" id="modalTechList">
+                        <!-- Se llenará dinámicamente -->
+                    </div>
+                </div>
+
+                <div class="project-modal__actions" id="modalActions">
+                    <!-- Se llenará dinámicamente -->
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer class="footer">
         <div class="footer__socials">

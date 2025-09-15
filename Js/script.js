@@ -311,7 +311,7 @@ const translations = {
         skillsTitle: "Competencias Técnicas",
         projectsTitle: "Proyectos",
         crmTitle: "Sistema de gestion Empresarial completo (ERP-CRM) ",
-        crmDescription: "Plataforma de gestión empresarial desarrollada desde cero que integra todas las operaciones de negocio en un solo sistema. Incluye gestión completa de clientes, productos, ventas e inventario con dashboard interactivo, métricas en tiempo real, generación automática de PDFs y envío de emails. Desarrollado con Spring Boot en el backend, React en el frontend, base de datos PostgreSQL y desplegado en Render. Sistema completamente responsive con filtros inteligentes y búsqueda avanzada que demuestra capacidades full-stack para soluciones empresariales reales <br><br> *NOTA: Primera carga puede tardar ~30-60 segundos (servidor gratuito en standby).",
+        crmDescription: "*Primera carga puede tardar ~30-60 segundos (servidor gratuito en standby).",
         spyzerTitle: "Spyzer",
         spyzerDescription: "En desarrollo: plataforma fintech para seguimiento en tiempo real del SP500.",
         viewDemo: "Ver Demo Online",
@@ -361,7 +361,7 @@ const translations = {
         skillsTitle: "Technical Skills",
         projectsTitle: "Projects",
         crmTitle: "Complete Enterprise Management System (ERP-CRM)",
-        crmDescription: "A full-featured business management platform that streamlines operations by bringing customers, products, sales, and inventory into one centralized system. The platform offers real-time analytics through an interactive dashboard, automated PDF reporting, and email notifications. Built using Spring Boot for the backend and React for the frontend, with PostgreSQL database and cloud deployment on Render. The responsive design includes smart filtering and advanced search functionality, showcasing modern full-stack development for enterprise-grade solutions. <br><br>*NOTE: Initial load may take ~30-60 seconds (free server on standby)",
+        crmDescription: "Initial load may take ~30-60 seconds (free server on standby)",
         spyzerTitle: "Spyzer",
         spyzerDescription: "In development: fintech platform for real-time SP500 tracking.",
         viewDemo: "View Demo Online",
@@ -411,7 +411,7 @@ const translations = {
         skillsTitle: "Technische Fähigkeiten",
         projectsTitle: "Projekte",
         crmTitle: "Vollständiges Unternehmens-Management-System (ERP-CRM)",
-        crmDescription: "Eine umfassende Geschäftsverwaltungsplattform, die alle Betriebsabläufe in einem zentralisierten System zusammenführt. Die Plattform bietet Echtzeit-Analysen über ein interaktives Dashboard, automatisierte PDF-Berichte und E-Mail-Benachrichtigungen. Entwickelt mit Spring Boot im Backend und React im Frontend, PostgreSQL-Datenbank und Cloud-Deployment auf Render. Das responsive Design umfasst intelligente Filterung und erweiterte Suchfunktionen und demonstriert moderne Full-Stack-Entwicklung für Unternehmenslösungen. <br><br>*HINWEIS: Der erste Ladevorgang kann ~30-60 Sekunden dauern (kostenloser Server im Standby-Modus).",
+        crmDescription: "Der erste Ladevorgang kann ~30-60 Sekunden dauern (kostenloser Server im Standby-Modus).",
         spyzerTitle: "Spyzer",
         spyzerDescription: "In Entwicklung: Eine Fintech-Plattform für Echtzeit-SP500-Tracking und Portfolio-Management.",
         viewDemo: "Demo ansehen online",
@@ -476,8 +476,13 @@ function changeLanguage() {
     updateHamburgerMenuLanguage();
 
     if (window.innerWidth >= 1024) {
-    updateSidebarTexts();
-}
+        updateSidebarTexts();
+    }
+
+    // AGREGAR ESTA LÍNEA:
+    setTimeout(() => {
+        updateModalTranslations();
+    }, 300);
 }
 
 // Función para mostrar indicador visual del idioma actual
@@ -1424,3 +1429,491 @@ function updateActiveDot(activeDot) {
 }
 
 console.log('JavaScript horizontal con traducción cargado');
+// ===== SISTEMA MODAL SIMPLIFICADO CON GALERÍA =====
+
+// Traducciones para el modal
+const modalTranslations = {
+    es: {
+        galleryTitle: "Galería del Proyecto",
+        technologiesTitle: "Tecnologías Utilizadas",
+        viewProject: "Ver Proyecto",
+        viewCode: "Ver Código"
+    },
+    en: {
+        galleryTitle: "Project Gallery",
+        technologiesTitle: "Technologies Used", 
+        viewProject: "View Project",
+        viewCode: "View Code"
+    },
+    de: {
+        galleryTitle: "Projekt Galerie",
+        technologiesTitle: "Verwendete Technologien",
+        viewProject: "Projekt ansehen",
+        viewCode: "Code ansehen"
+    }
+};
+
+// Función para obtener texto traducido del modal
+function getModalTranslation(key) {
+    const lang = currentLanguage || 'es';
+    return modalTranslations[lang]?.[key] || modalTranslations['es'][key];
+}
+
+// Función para obtener datos traducidos del proyecto
+function getProjectData(project, key, imageIndex = null) {
+    const lang = currentLanguage || 'es';
+    
+    if (imageIndex !== null && key === 'images') {
+        const image = project.images[imageIndex];
+        return {
+            src: image.src,
+            alt: typeof image.alt === 'object' ? (image.alt[lang] || image.alt['es']) : image.alt,
+            description: typeof image.description === 'object' ? (image.description[lang] || image.description['es']) : image.description
+        };
+    }
+    
+    const value = project[key];
+    if (typeof value === 'object' && !Array.isArray(value) && value !== null) {
+        return value[lang] || value['es'];
+    }
+    
+    return value;
+}
+
+// Datos simplificados de proyectos con traducciones
+const projectsDataComplete = {
+    crm: {
+        title: "Sistema de Gestión Empresarial Completo (ERP-CRM)",
+        description: "Plataforma de gestión empresarial desarrollada desde cero que integra todas las operaciones de negocio en un solo sistema. Incluye gestión completa de clientes, productos, ventas e inventario con dashboard interactivo, métricas en tiempo real, generación automática de PDFs y envío de emails. Sistema completamente responsive con filtros inteligentes y búsqueda avanzada que demuestra capacidades full-stack para soluciones empresariales reales.",
+        images: [
+            {
+                src: './Assets/crm.png',
+                alt: 'Dashboard principal del CRM',
+                description: 'Vista principal con dashboard interactivo y métricas en tiempo real'
+            },
+            {
+                src: './Assets/crm2.png', 
+                alt: 'Módulo de gestión de clientes',
+                description: 'Gestión completa de clientes con filtros y búsqueda avanzada'
+            },
+            {
+                src: './Assets/crm3.png', 
+                alt: 'Módulo de gestión de empleados',
+                description: 'Control de productos e inventario con alertas de stock'
+            },
+            {
+                src: './Assets/crm4.png', 
+                alt: 'Módulo de ventas',
+                description: 'Gestión de ventas con generación automática de PDFs'
+            },
+            {
+                src: './Assets/crm5.png', 
+                alt: 'Sistema de inventario',
+                description: 'Gestión de ventas con generación automática de PDFs'
+            }
+        ],
+        technologies: [
+            "Spring Boot", "React", "PostgreSQL", "JWT", "Material-UI", 
+            "RESTful APIs", "Maven", "Git", "Render", "Docker", "Spring Security"
+        ],
+        liveUrl: "https://xtartsolutions-crm.onrender.com/",
+        githubUrl: "https://github.com/MiiguelMM/xtart-CRM-backend",
+        note: "*NOTA: Primera carga puede tardar ~30-60 segundos (servidor gratuito en standby)"
+    },
+    spyzer: {
+        title: "Spyzer - Plataforma Fintech",
+        description: "Plataforma fintech innovadora en desarrollo para el seguimiento y análisis en tiempo real del SP500. Incluirá herramientas avanzadas de análisis técnico, alertas personalizadas, portfolio tracking y machine learning para predicciones de mercado. Diseñada para inversores que buscan tomar decisiones informadas basadas en datos precisos y análisis profundo del mercado.",
+        images: [
+            {
+                src: './Assets/spyzer.png',
+                alt: 'Spyzer en desarrollo',
+                description: 'Proyecto fintech en desarrollo activo - Lanzamiento ??'
+            },
+             {
+                src: './Assets/spyzer1.png',
+                alt: 'Spyzer en desarrollo',
+                description: 'Proyecto fintech en desarrollo activo - Lanzamiento ??'
+            },
+             {
+                src: './Assets/spyzer3.png',
+                alt: 'Spyzer en desarrollo',
+                description: 'Proyecto fintech en desarrollo activo - Lanzamiento ??'
+            },
+             {
+                src: './Assets/spyzer4.png',
+                alt: 'Spyzer en desarrollo',
+                description: 'Proyecto fintech en desarrollo activo - Lanzamiento ??'
+            }
+        ],
+        technologies: [
+            "React", "Node.js", "Springboot"
+        ],
+        liveUrl: "#",
+        githubUrl: "#",
+        note: "🚧 Proyecto en desarrollo activo - Lanzamiento previsto para  2025"
+    }
+};
+
+class ProjectGalleryComplete {
+    constructor() {
+        this.currentImageIndex = 0;
+        this.images = [];
+        this.currentProject = null;
+        this.init();
+    }
+
+    init() {
+        this.bindEvents();
+        this.createFullscreenOverlay();
+    }
+
+    openModal(projectKey) {
+        const project = projectsDataComplete[projectKey];
+        if (!project) return;
+
+        this.currentProject = project;
+        this.images = project.images || [];
+        this.currentImageIndex = 0;
+
+        const modal = document.querySelector('.project-modal');
+        if (!modal) return;
+
+        this.updateModalContent();
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    updateModalContent() {
+        const modalBody = document.querySelector('.project-modal__body');
+        if (!modalBody || !this.currentProject) return;
+
+        if (this.images.length > 1) {
+            this.createGalleryHTML();
+        } else {
+            this.createSingleImageHTML();
+        }
+
+        this.updateMainImage();
+    }
+
+    createGalleryHTML() {
+        const modalBody = document.querySelector('.project-modal__body');
+        modalBody.innerHTML = `
+            <!-- Galería de imágenes -->
+            <div class="project-modal__gallery">
+                <h3 class="project-modal__gallery-title">${getModalTranslation('galleryTitle')}</h3>
+                
+                <!-- Imagen principal -->
+                <div class="project-modal__main-image-container">
+                    <img class="project-modal__main-image" src="" alt="Imagen del proyecto">
+                    <button class="project-modal__nav-btn project-modal__nav-btn--prev">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="project-modal__nav-btn project-modal__nav-btn--next">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <button class="project-modal__fullscreen-btn">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <div class="project-modal__image-counter">
+                        <span class="current">1</span> / <span class="total">${this.images.length}</span>
+                    </div>
+                </div>
+
+                <!-- Descripción de imagen actual -->
+                <p class="project-modal__image-description"></p>
+
+                <!-- Miniaturas -->
+                <div class="project-modal__gallery-grid">
+                    ${this.images.map((img, index) => {
+                        const imageData = getProjectData(this.currentProject, 'images', index);
+                        return `
+                            <div class="project-modal__gallery-item ${index === 0 ? 'active' : ''}" data-index="${index}">
+                                <img class="project-modal__gallery-thumb" src="${imageData.src}" alt="${imageData.alt}">
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            </div>
+
+            <!-- Información del proyecto -->
+            <div class="project-modal__info">
+                <h2 class="project-modal__title">${getProjectData(this.currentProject, 'title')}</h2>
+                <p class="project-modal__description">${getProjectData(this.currentProject, 'description')}</p>
+                
+                <!-- Tecnologías utilizadas -->
+                <div class="project-modal__tech-stack">
+                    <h3 class="project-modal__tech-title">${getModalTranslation('technologiesTitle')}</h3>
+                    <div class="project-modal__tech-list">
+                        ${this.currentProject.technologies.map(tech => `
+                            <span class="project-modal__tech-item">${tech}</span>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <!-- Acciones -->
+                <div class="project-modal__actions">
+                    ${this.currentProject.liveUrl !== '#' ? `
+                        <a href="${this.currentProject.liveUrl}" class="btn btn-primary" target="_blank">
+                            <i class="fas fa-external-link-alt"></i> ${getModalTranslation('viewProject')}
+                        </a>
+                    ` : ''}
+                    ${this.currentProject.githubUrl !== '#' ? `
+                        <a href="${this.currentProject.githubUrl}" class="btn btn-secondary" target="_blank">
+                            <i class="fab fa-github"></i> ${getModalTranslation('viewCode')}
+                        </a>
+                    ` : ''}
+                </div>
+
+                <!-- Nota -->
+                ${getProjectData(this.currentProject, 'note') ? `
+                    <div class="project-modal__note">
+                        <p>${getProjectData(this.currentProject, 'note')}</p>
+                    </div>
+                ` : ''}
+            </div>
+        `;
+    }
+
+    createSingleImageHTML() {
+        const modalBody = document.querySelector('.project-modal__body');
+        modalBody.innerHTML = `
+            <!-- Imagen única -->
+            <div class="project-modal__main-image-container">
+                <img class="project-modal__main-image" src="${this.images[0]?.src}" alt="${getProjectData(this.currentProject, 'images', 0).alt}">
+                <button class="project-modal__fullscreen-btn">
+                    <i class="fas fa-expand"></i>
+                </button>
+            </div>
+
+            <!-- Información del proyecto -->
+            <div class="project-modal__info">
+                <h2 class="project-modal__title">${getProjectData(this.currentProject, 'title')}</h2>
+                <p class="project-modal__description">${getProjectData(this.currentProject, 'description')}</p>
+                
+                <!-- Tecnologías utilizadas -->
+                <div class="project-modal__tech-stack">
+                    <h3 class="project-modal__tech-title">${getModalTranslation('technologiesTitle')}</h3>
+                    <div class="project-modal__tech-list">
+                        ${this.currentProject.technologies.map(tech => `
+                            <span class="project-modal__tech-item">${tech}</span>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <!-- Acciones -->
+                <div class="project-modal__actions">
+                    ${this.currentProject.liveUrl !== '#' ? `
+                        <a href="${this.currentProject.liveUrl}" class="btn btn-primary" target="_blank">
+                            <i class="fas fa-external-link-alt"></i> ${getModalTranslation('viewProject')}
+                        </a>
+                    ` : ''}
+                    ${this.currentProject.githubUrl !== '#' ? `
+                        <a href="${this.currentProject.githubUrl}" class="btn btn-secondary" target="_blank">
+                            <i class="fab fa-github"></i> ${getModalTranslation('viewCode')}
+                        </a>
+                    ` : ''}
+                </div>
+
+                <!-- Nota -->
+                ${getProjectData(this.currentProject, 'note') ? `
+                    <div class="project-modal__note">
+                        <p>${getProjectData(this.currentProject, 'note')}</p>
+                    </div>
+                ` : ''}
+            </div>
+        `;
+    }
+
+    updateMainImage() {
+        if (this.images.length === 0) return;
+
+        const mainImage = document.querySelector('.project-modal__main-image');
+        const imageDescription = document.querySelector('.project-modal__image-description');
+        const currentCounter = document.querySelector('.project-modal__image-counter .current');
+        
+        if (mainImage) {
+            mainImage.classList.add('changing');
+            const imageData = getProjectData(this.currentProject, 'images', this.currentImageIndex);
+            mainImage.src = imageData.src;
+            mainImage.alt = imageData.alt;
+            
+            setTimeout(() => mainImage.classList.remove('changing'), 300);
+        }
+
+        if (imageDescription) {
+            const imageData = getProjectData(this.currentProject, 'images', this.currentImageIndex);
+            imageDescription.textContent = imageData.description || '';
+        }
+
+        if (currentCounter) {
+            currentCounter.textContent = this.currentImageIndex + 1;
+        }
+
+        this.updateActiveThumbnail();
+    }
+
+    updateActiveThumbnail() {
+        const thumbnails = document.querySelectorAll('.project-modal__gallery-item');
+        thumbnails.forEach((thumb, index) => {
+            thumb.classList.toggle('active', index === this.currentImageIndex);
+        });
+    }
+
+    previousImage() {
+        if (this.images.length <= 1) return;
+        this.currentImageIndex = (this.currentImageIndex - 1 + this.images.length) % this.images.length;
+        this.updateMainImage();
+    }
+
+    nextImage() {
+        if (this.images.length <= 1) return;
+        this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
+        this.updateMainImage();
+    }
+
+    goToImage(index) {
+        if (index >= 0 && index < this.images.length) {
+            this.currentImageIndex = index;
+            this.updateMainImage();
+        }
+    }
+
+    openFullscreen() {
+        const overlay = document.querySelector('.project-modal__fullscreen-overlay');
+        const fullscreenImage = document.querySelector('.project-modal__fullscreen-image');
+        
+        if (overlay && fullscreenImage && this.images.length > 0) {
+            fullscreenImage.src = this.images[this.currentImageIndex].src;
+            fullscreenImage.alt = this.images[this.currentImageIndex].alt;
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    closeFullscreen() {
+        const overlay = document.querySelector('.project-modal__fullscreen-overlay');
+        if (overlay) {
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+
+    closeModal() {
+        const modal = document.querySelector('.project-modal');
+        if (modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+
+    createFullscreenOverlay() {
+        if (document.querySelector('.project-modal__fullscreen-overlay')) return;
+
+        const overlay = document.createElement('div');
+        overlay.className = 'project-modal__fullscreen-overlay';
+        overlay.innerHTML = `
+            <img class="project-modal__fullscreen-image" src="" alt="Imagen en pantalla completa">
+            <button class="project-modal__fullscreen-close">
+                <i class="fas fa-times"></i>
+            </button>
+        `;
+        document.body.appendChild(overlay);
+    }
+
+    bindEvents() {
+        document.addEventListener('click', (e) => {
+            // Navegación entre imágenes
+            if (e.target.closest('.project-modal__nav-btn--prev')) {
+                this.previousImage();
+            } else if (e.target.closest('.project-modal__nav-btn--next')) {
+                this.nextImage();
+            }
+            
+            // Selección de miniatura
+            else if (e.target.closest('.project-modal__gallery-item')) {
+                const index = parseInt(e.target.closest('.project-modal__gallery-item').dataset.index);
+                this.goToImage(index);
+            }
+            
+            // Pantalla completa
+            else if (e.target.closest('.project-modal__fullscreen-btn')) {
+                this.openFullscreen();
+            } else if (e.target.closest('.project-modal__fullscreen-close')) {
+                this.closeFullscreen();
+            }
+
+            // Cerrar modal
+            else if (e.target.closest('.project-modal__close')) {
+                this.closeModal();
+            }
+
+            // Abrir modal desde eye icon
+            else if (e.target.closest('.project-card__eye-icon')) {
+                e.stopPropagation();
+                const projectCard = e.target.closest('.project-card');
+                const projectKey = projectCard.getAttribute('data-project');
+                this.openModal(projectKey);
+            }
+        });
+
+        // Navegación con teclado
+        document.addEventListener('keydown', (e) => {
+            const modal = document.querySelector('.project-modal');
+            if (!modal || !modal.classList.contains('active')) return;
+
+            switch(e.key) {
+                case 'ArrowLeft':
+                    this.previousImage();
+                    break;
+                case 'ArrowRight':
+                    this.nextImage();
+                    break;
+                case 'Escape':
+                    if (document.querySelector('.project-modal__fullscreen-overlay.active')) {
+                        this.closeFullscreen();
+                    } else {
+                        this.closeModal();
+                    }
+                    break;
+            }
+        });
+
+        // Cerrar fullscreen y modal al hacer clic en overlay
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('project-modal__fullscreen-overlay')) {
+                this.closeFullscreen();
+            } else if (e.target.classList.contains('project-modal')) {
+                this.closeModal();
+            }
+        });
+    }
+}
+
+// Inicializar el sistema cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', function() {
+    const projectGallery = new ProjectGalleryComplete();
+    
+    // Hacer global para acceso fácil
+    window.projectGallery = projectGallery;
+    
+    console.log('Sistema de galería de proyectos inicializado');
+});
+// Función para actualizar traducciones del modal (COMPLETA)
+function updateModalTranslations() {
+    const modal = document.querySelector('.project-modal');
+    if (!modal || !modal.classList.contains('active')) return;
+
+    // Regenerar completamente el contenido del modal
+    if (window.projectGallery && window.projectGallery.currentProject) {
+        // Mantener el índice de imagen actual
+        const currentIndex = window.projectGallery.currentImageIndex;
+        
+        // Regenerar el contenido
+        window.projectGallery.updateModalContent();
+        
+        // Restaurar el índice de imagen
+        window.projectGallery.currentImageIndex = currentIndex;
+        window.projectGallery.updateMainImage();
+    }
+}
