@@ -312,8 +312,8 @@ const translations = {
         projectsTitle: "Proyectos",
         crmTitle: "Sistema de gestion Empresarial completo (ERP-CRM) ",
         crmDescription: "*Primera carga puede tardar ~30-60 segundos (servidor gratuito en standby).",
-        spyzerTitle: "Spyzer",
-        spyzerDescription: "En desarrollo: plataforma fintech para seguimiento en tiempo real del SP500.",
+        spyzerTitle: "Spyzer - Plataforma de Simulación y Análisis",
+        spyzerDescription: "Desarrollé una aplicación Full Stack de simulación de inversión con arquitectura de datos en tiempo real, enfocada en el análisis de fundamentales y proyecciones de Montecarlo.",
         viewDemo: "Ver Demo Online",
         viewCode: "Código",
         experienceTitle: "Experiencia previa",
@@ -362,8 +362,8 @@ const translations = {
         projectsTitle: "Projects",
         crmTitle: "Complete Enterprise Management System (ERP-CRM)",
         crmDescription: "Initial load may take ~30-60 seconds (free server on standby)",
-        spyzerTitle: "Spyzer",
-        spyzerDescription: "In development: fintech platform for real-time SP500 tracking.",
+        spyzerTitle: "Spyzer - Simulation and Analysis Platform",
+        spyzerDescription: "I developed a Full Stack investment simulation application with a real-time data architecture, focused on fundamental analysis and Monte Carlo projections.",
         viewDemo: "View Demo Online",
         viewCode: "Code",
         experienceTitle: "Previous Experience",
@@ -412,8 +412,8 @@ const translations = {
         projectsTitle: "Projekte",
         crmTitle: "Vollständiges Unternehmens-Management-System (ERP-CRM)",
         crmDescription: "Der erste Ladevorgang kann ~30-60 Sekunden dauern (kostenloser Server im Standby-Modus).",
-        spyzerTitle: "Spyzer",
-        spyzerDescription: "In Entwicklung: Eine Fintech-Plattform für Echtzeit-SP500-Tracking und Portfolio-Management.",
+        spyzerTitle: "Spyzer - Simulations- und Analyseplattform",
+        spyzerDescription: "Ich habe eine Full-Stack-Anwendung zur Investitionssimulation mit einer Echtzeit-Datenarchitektur entwickelt, die sich auf die Fundamentalanalyse und Monte-Carlo-Projektionen konzentriert.",
         viewDemo: "Demo ansehen online",
         viewCode: "Code",
         experienceTitle: "Erfahrung",
@@ -1521,8 +1521,8 @@ const projectsDataComplete = {
         note: "*NOTA: Primera carga puede tardar ~30-60 segundos (servidor gratuito en standby)"
     },
     spyzer: {
-        title: "Spyzer - Plataforma Fintech",
-        description: "Plataforma fintech innovadora en desarrollo para el seguimiento y análisis en tiempo real del SP500. Incluirá herramientas avanzadas de análisis técnico, alertas personalizadas, portfolio tracking y machine learning para predicciones de mercado. Diseñada para inversores que buscan tomar decisiones informadas basadas en datos precisos y análisis profundo del mercado.",
+        title: "Spyzer - Plataforma de Simulación y Análisis",
+        description: "Desarrollé una aplicación Full Stack de simulación de inversión con arquitectura de datos en tiempo real, enfocada en el análisis de fundamentales y proyecciones de Montecarlo. Implementé Spring Security para el control de acceso y autorización del backend. Integré APIs financieras para el monitoreo en tiempo real de cuatro índices bursátiles internacionales y 51 populares, e implementé una estrategia de caché de baja latencia en el backend para optimizar el alto rendimiento de los datos. Desarrollé un dashboard interactivo en React que permite el análisis técnico con gráficos (candlestick, línea, y área). Creé un sistema completo de Gestión de Cartera con lógica de cálculo profesional (simulación con 50.000€ virtuales), complementado con Alertas Personalizadas y Ranking.",
         images: [
             {
                 src: './Assets/spyzer.png',
@@ -1543,10 +1543,31 @@ const projectsDataComplete = {
                 src: './Assets/spyzer4.png',
                 alt: 'Spyzer en desarrollo',
                 description: 'Proyecto fintech en desarrollo activo - Lanzamiento ??'
-            }
+            },
+            {
+
+                src: './Assets/spyzer5.png',
+                alt: 'Spyzer en desarrollo',
+                description: 'Proyecto fintech en desarrollo activo - Lanzamiento ??'
+            },
+                {   
+                src: './Assets/spyzer6.png',
+                alt: 'Spyzer en desarrollo',
+                description: 'Proyecto fintech en desarrollo activo - Lanzamiento ??'
+            },
+                {
+                src: './Assets/spyzer7.png',
+                alt: 'Spyzer en desarrollo',
+                description: 'Proyecto fintech en desarrollo activo - Lanzamiento ??'
+            },
+                {
+                src: './Assets/spyzer8.png',
+                alt: 'Spyzer en desarrollo',
+                description: 'Proyecto fintech en desarrollo activo - Lanzamiento ??'
+            }   
         ],
         technologies: [
-            "React", "Node.js", "Springboot"
+            "Java (Spring Boot)", "React", "Node.js", "PostgreSQL"
         ],
         liveUrl: "#",
         githubUrl: "#",
