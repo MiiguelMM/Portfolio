@@ -1564,6 +1564,11 @@ const projectsDataComplete = {
                 src: './Assets/spyzer8.png',
                 alt: 'Spyzer en desarrollo',
                 description: 'Proyecto fintech en desarrollo activo - Lanzamiento ??'
+            }  ,
+                {
+                src: './Assets/spyzer9.png',
+                alt: 'Spyzer en desarrollo',
+                description: 'Proyecto fintech en desarrollo activo - Lanzamiento ??'
             }   
         ],
         technologies: [
