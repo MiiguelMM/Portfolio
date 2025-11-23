@@ -103,7 +103,7 @@ body:not([data-theme="blue"])::before {
     height: 100%;
     pointer-events: none;
     z-index: 0;
-    opacity: 0.7;
+    opacity: 0.5; /* Reducido para efecto más sutil y premium */
 }
 
 .particle {
@@ -113,7 +113,8 @@ body:not([data-theme="blue"])::before {
     background: var(--primary-color);
     border-radius: 50%;
     opacity: 0;
-    animation: floatSubtle 20s linear infinite forwards;
+    animation: floatSubtle 50s ease-in-out infinite forwards; /* Más lento y suave */
+    filter: blur(0.5px); /* Ligero blur para efecto premium */
 }
 
 /* Partículas más visibles en tema claro */
@@ -132,49 +133,59 @@ body:not([data-theme="blue"])::before {
     }
 }
 
-/* Animación original para móviles */
+/* Animación premium para móviles */
 @keyframes floatSubtle {
     0% {
         opacity: 0;
-        transform: translateY(100vh) scale(0);
+        transform: translateY(100vh) translateX(0) scale(0);
     }
 
-    10% {
-        opacity: 0.5;
-        transform: translateY(90vh) scale(1);
+    15% {
+        opacity: 0.3; /* Más sutil */
+        transform: translateY(85vh) translateX(10px) scale(1);
     }
 
-    90% {
-        opacity: 0.5;
-        transform: translateY(10vh) scale(1);
+    50% {
+        opacity: 0.4; /* Opacidad máxima más baja para elegancia */
+        transform: translateY(50vh) translateX(-15px) scale(1.1);
+    }
+
+    85% {
+        opacity: 0.3;
+        transform: translateY(15vh) translateX(5px) scale(1);
     }
 
     100% {
         opacity: 0;
-        transform: translateY(0) scale(0);
+        transform: translateY(0) translateX(0) scale(0);
     }
 }
 
-/* Animación más lenta para desktop */
+/* Animación premium para desktop */
 @keyframes floatSubtleDesktop {
     0% {
         opacity: 0;
-        transform: translateY(100vh) scale(0);
+        transform: translateY(100vh) translateX(0) scale(0);
     }
 
-    10% {
-        opacity: 0.6;
-        transform: translateY(90vh) scale(1);
+    15% {
+        opacity: 0.35; /* Más visible en desktop pero aún sutil */
+        transform: translateY(85vh) translateX(15px) scale(1);
     }
 
-    90% {
-        opacity: 0.6;
-        transform: translateY(10vh) scale(1);
+    50% {
+        opacity: 0.5; /* Opacidad máxima controlada */
+        transform: translateY(50vh) translateX(-20px) scale(1.15);
+    }
+
+    85% {
+        opacity: 0.35;
+        transform: translateY(15vh) translateX(8px) scale(1);
     }
 
     100% {
         opacity: 0;
-        transform: translateY(0) scale(0);
+        transform: translateY(0) translateX(0) scale(0);
     }
 }
 

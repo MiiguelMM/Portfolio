@@ -693,15 +693,15 @@ function createParticles() {
     const particlesContainer = document.getElementById('particles');
     if (!particlesContainer) return;
 
-    const particleCount = 50;
+    const particleCount = 30; // Reducido para un look más premium
 
     for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
         particle.className = 'particle';
 
         particle.style.left = Math.random() * 100 + '%';
-        particle.style.animationDelay = Math.random() * 20 + 's';
-        particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+        particle.style.animationDelay = Math.random() * 40 + 's'; // Delay más largo para efecto escalonado
+        particle.style.animationDuration = (Math.random() * 25 + 45) + 's'; // 45-70s: mucho más lento y premium
 
         particlesContainer.appendChild(particle);
     }
